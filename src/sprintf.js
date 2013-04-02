@@ -1,7 +1,8 @@
 /**
- * sprintf() for JavaScript v.0.3
+ * sprintf() for JavaScript v.0.4
  *
  * Copyright (c) 2007 Alexandru Marasteanu <http://alexei.417.ro/>
+ * Thanks to David Baird (unit test and patch).
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -43,7 +44,7 @@ function sprintf () {
       }
       a = (/[def]/.test(m[7]) && m[2] && a > 0 ? '+' + a : a);
       c = m[3] ? m[3] == '0' ? '0' : m[3].charAt(1) : ' ';
-      x = m[6] ? m[5] - String(a).length : m[5];
+      x = m[5] - String(a).length;
       p = m[5] ? str_repeat(c, x) : '';
       o.push(m[4] ? a + p : p + a);
     }
