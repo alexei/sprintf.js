@@ -1,4 +1,4 @@
-/*! sprintf.js | (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
+/*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
 (function(window) {
 	var sprintf = (function() {
@@ -53,7 +53,7 @@
 						case 'f': arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg); break;
 						case 'o': arg = arg.toString(8); break;
 						case 's': arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg); break;
-						case 'u': arg = Math.abs(arg); break;
+						case 'u': arg = arg >>> 0; break;
 						case 'x': arg = arg.toString(16); break;
 						case 'X': arg = arg.toString(16).toUpperCase(); break;
 					}
