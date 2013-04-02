@@ -1,5 +1,5 @@
 /**
- * sprintf() for JavaScript v.0.2
+ * sprintf() for JavaScript v.0.3
  *
  * Copyright (c) 2007 Alexandru Marasteanu <http://alexei.417.ro/>
  *
@@ -26,7 +26,7 @@ function sprintf () {
     if (m = /^[^\x25]+/.exec(f)) o.push(m[0]);
     else if (m = /^\x25{2}/.exec(f)) o.push('%');
     else if (m = /^\x25(?:(\d+)\$)?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(f)) {
-      if (!(a = arguments[m[1] ? m[1] : i++])) throw("Too few arguments.");
+      if (((a = arguments[m[1] || i++]) == null) || (a == undefined)) throw("Too few arguments.");
       if (/[^s]/.test(m[7]) && (typeof(a) != 'number'))
         throw("Expecting number but found " + typeof(a));
       switch (m[7]) {
