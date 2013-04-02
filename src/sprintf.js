@@ -1,5 +1,5 @@
 /**
-sprintf() for JavaScript 0.5
+sprintf() for JavaScript 0.6
 
 Copyright (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>
 All rights reserved.
@@ -40,11 +40,17 @@ Changelog:
  - bug fix: 0 is now preceeded with a + sign
  - bug fix: the sign was not at the right position on padded results (Kamal Abdali)
  - switched from GPL to BSD license
+2010.05.22 - 0.6:
+ - reverted to 0.4 and fixed the bug regarding the sign of the number 0
+ Note:
+ Thanks to Raphael Pigulla <raph (at] n3rd [dot) org> (http://www.n3rd.org/)
+ who warned me about a bug in 0.5, I discovered that the last update was
+ a regress. I appologize for that.
 **/
 
 function str_repeat(i, m) {
 	for (var o = []; m > 0; o[--m] = i);
-	return(o.join(""));
+	return o.join('');
 }
 
 function sprintf() {
@@ -54,14 +60,14 @@ function sprintf() {
 			o.push(m[0]);
 		}
 		else if (m = /^\x25{2}/.exec(f)) {
-			o.push("%");
+			o.push('%');
 		}
 		else if (m = /^\x25(?:(\d+)\$)?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(f)) {
 			if (((a = arguments[m[1] || i++]) == null) || (a == undefined)) {
-				throw("Too few arguments.");
+				throw('Too few arguments.');
 			}
-			if (/[^s]/.test(m[7]) && (typeof(a) != "number")) {
-				throw("Expecting number but found " + typeof(a));
+			if (/[^s]/.test(m[7]) && (typeof(a) != 'number')) {
+				throw('Expecting number but found ' + typeof(a));
 			}
 			switch (m[7]) {
 				case 'b': a = a.toString(2); break;
@@ -75,19 +81,16 @@ function sprintf() {
 				case 'x': a = a.toString(16); break;
 				case 'X': a = a.toString(16).toUpperCase(); break;
 			}
-			if (/[def]/.test(m[7])) {
-				s = (a >= 0 ? (m[2] ? '+' : '') : '-');
-				a = Math.abs(a);
-			}
+			a = (/[def]/.test(m[7]) && m[2] && a >= 0 ? '+'+ a : a);
 			c = m[3] ? m[3] == '0' ? '0' : m[3].charAt(1) : ' ';
 			x = m[5] - String(a).length - s.length;
 			p = m[5] ? str_repeat(c, x) : '';
 			o.push(s + (m[4] ? a + p : p + a));
 		}
 		else {
-			throw("Huh ?!");
+			throw('Huh ?!');
 		}
 		f = f.substring(m[0].length);
 	}
-	return o.join("");
+	return o.join('');
 }
