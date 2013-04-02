@@ -122,7 +122,8 @@ var sprintf = (function() {
 	return str_format;
 })();
 
-var vsprintf = function(fmt, argv) {
-	argv.unshift(fmt);
-	return sprintf.apply(null, argv);
+var vsprintf = function(fmt, argv, _argv) {
+	_argv = argv.slice(0);
+	_argv.splice(0, 0, fmt);
+	return sprintf.apply(null, _argv);
 };
