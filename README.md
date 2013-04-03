@@ -1,5 +1,5 @@
 # sprintf.js
-sprintf.js is a complete open source JavaScript sprintf implementation.
+sprintf.js is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
 
 It's prototype is simple:
 
@@ -51,3 +51,16 @@ Keywords in replacement fields can be optionally followed by any number of keywo
 	];
 	sprintf('Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s', {users: users}); // Hello Dolly, Molly and Polly
 Note: mixing positional and named placeholders is not (yet) supported
+
+# As a node.js module
+## Install
+
+	npm install sprintf-js
+
+## How to
+
+	var sprintf = require("sprintf-js").sprintf,
+		vsprintf = require("sprintf-js").vsprintf;
+
+	console.log(sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants"));
+	console.log(vsprintf("The first 4 letters of the english alphabet are: %s, %s, %s and %s", ["a", "b", "c", "d"]));
