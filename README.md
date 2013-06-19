@@ -1,7 +1,7 @@
 # sprintf.js
 sprintf.js is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
 
-It's prototype is simple:
+Its prototype is simple:
 
 	string sprintf(string format , [mixed arg1 [, mixed arg2 [ ,...]]]);
 
