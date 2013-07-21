@@ -7,7 +7,7 @@ var define = (function(){
     {
 	if (window.define && window.define.amd)
 	    return window.define;
-	throw new Error('RequireJS is missing');
+	return function(not_used, fn){ window.sprintf = fn(); };
     }
     return function(requirements, setup){
         module.exports = setup.apply(this, requirements.map(require)); };
