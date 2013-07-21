@@ -1,5 +1,5 @@
-# sprintf.js
-sprintf.js is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
+# sprintf-fast.js
+sprintf-fast.js is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
 
 Its prototype is simple:
 
