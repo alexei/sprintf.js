@@ -1,6 +1,6 @@
 {
   "name": "sprintf-fast-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "JavaScript fast sprintf implementation",
   "main": "src/sprintf.js",
   "directories": {
