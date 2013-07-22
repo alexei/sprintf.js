@@ -1,4 +1,4 @@
-/* https://github.com/jontra/sprintf-fast.js */
+/* https://github.com/alexei/sprintf.js/commit/705836ac4740fd591cdb99f809c1136330cf2248 */
 'use strict'; /*jslint node:true, browser:true*/ /*globals window, exports, module*/
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
@@ -16,9 +16,10 @@ var define = (function(){
 define([], function(){
 
 var sprintf = function(fmt /* args... */){
-    if (!sprintf.cache[fmt])
-	sprintf.cache[fmt] = sprintf.parse(fmt);
-    return sprintf.cache[fmt](sprintf, arguments);
+    var _fmt = ':'+fmt; // protect against __proto__
+    if (!sprintf.cache[_fmt])
+	sprintf.cache[_fmt] = sprintf.parse(fmt);
+    return sprintf.cache[_fmt](sprintf, arguments);
 };
 
 sprintf.cache = {};
@@ -134,9 +135,9 @@ sprintf.parse = function(fmt){
     return new Function(['sprintf', 'argv'], f);
 };
 
-sprintf.vsprintf = function(fmt, argv, _argv){
-    _argv = argv.slice(0);
-    _argv.splice(0, 0, fmt);
+sprintf.vsprintf = function(fmt, argv){
+    var _argv = [fmt];
+    _argv.push.apply(_argv, argv);
     return sprintf.apply(null, _argv);
 };
 
