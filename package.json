@@ -1,7 +1,7 @@
 {
-  "name": "sprintf-js",
-  "version": "0.0.7",
-  "description": "JavaScript sprintf implementation",
+  "name": "sprintf-fast-js",
+  "version": "0.0.3",
+  "description": "JavaScript fast sprintf implementation",
   "main": "src/sprintf.js",
   "directories": {
     "test": "test"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexei/sprintf.js.git"
+    "url": "https://github.com/jontra/sprintf-fast.js"
   },
   "author": "Alexandru Marasteanu <hello@alexei.ro> (http://alexei.ro/)",
   "license": "BSD",

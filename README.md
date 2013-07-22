@@ -1,5 +1,5 @@
-# sprintf.js
-sprintf.js is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
+# sprintf-fast.js
+sprintf-fast.js is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
 
 Its prototype is simple:
 
@@ -20,6 +20,7 @@ The placeholders in the format string are marked by "%" and are followed by one 
     * u — print an integer as an unsigned decimal number
     * f — print a float as is
     * o — print an integer as an octal number
+    * O — print JSON of an object 
     * s — print a string as is
     * x — print an integer as a hexadecimal number (lower-case)
     * X — print an integer as a hexadecimal number (upper-case)
@@ -55,7 +56,7 @@ Note: mixing positional and named placeholders is not (yet) supported
 # As a node.js module
 ## Install
 
-	npm install sprintf-js
+	npm install sprintf-fast-js
 
 ## How to
 
