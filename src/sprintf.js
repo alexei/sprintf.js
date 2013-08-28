@@ -1,6 +1,6 @@
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
-(function(ctx) {
+(function(window) {
 	var sprintf = function() {
 		if (!sprintf.cache.hasOwnProperty(arguments[0])) {
 			sprintf.cache[arguments[0]] = sprintf.parse(arguments[0]);
@@ -126,9 +126,21 @@
 		return output.join('');
 	}
 
-	/**
-	 * export to either browser or node.js
-	 */
-	ctx.sprintf = sprintf;
-	ctx.vsprintf = vsprintf;
-})(typeof exports != "undefined" ? exports : window);
+
+	if(typeof exports != "undefined") {
+		exports.sprintf = sprintf;
+		exports.vsprintf = vsprintf;
+	} else {
+		window.sprintf = sprintf;
+		window.vsprintf = vsprintf;
+
+		if(typeof define === 'function' && define.amd) {
+			define(function() {
+				return {
+					sprintf: sprintf,
+					vsprintf: vsprintf
+				};
+			});
+		}
+	}
+})('undefined' === typeof window ? undefined : window);
