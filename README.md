@@ -1,5 +1,5 @@
 # sprintf.js
-sprintf.js 是个实现于 *浏览器* 和 *node.js* 完全开源的JavaScript sprintf is a complete open source JavaScript sprintf。
+sprintf.js 是个实现于 *浏览器* 和 *node.js* 完全开源的JavaScript sprintf。
 
 其原型很简洁：
 
