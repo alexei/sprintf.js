@@ -30,7 +30,7 @@
 					arg = argv[match[1]];
 				}
 				else { // positional argument (implicit)
-					arg = argv[cursor++];
+					arg = argv[1][cursor++];
 				}
 
 				if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
