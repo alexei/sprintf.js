@@ -52,12 +52,19 @@ Keywords in replacement fields can be optionally followed by any number of keywo
 	sprintf('Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s', {users: users}); // Hello Dolly, Molly and Polly
 Note: mixing positional and named placeholders is not (yet) supported
 
-# As a node.js module
-## Install
+# Installation
+
+## via Bower
+
+	bower install sprintf
+
+## as a node.js module
+
+### Install
 
 	npm install sprintf-js
 
-## How to
+### Usage
 
 	var sprintf = require("sprintf-js").sprintf,
 		vsprintf = require("sprintf-js").vsprintf;
