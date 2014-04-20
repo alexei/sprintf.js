@@ -62,6 +62,14 @@
 			b = '   a';
 			assert_equal(a.length, b.length, 'sprintf4.length');
 			assert_equal(a, b, 'sprintf4');
+
+			a = sprintf('%(computed)s', {'computed': function() { return 'it was computed'; }});
+			b = 'it was computed';
+			assert_equal(a, b, 'Computed function didn\'t actually compute');
+
+			a = sprintf('%s %+d', function() { return 'Computed'; }, function() { return 10; });
+			b = 'Computed +10';
+			assert_equal(a, b, 'Computed function didn\'t compute properly');
 		}
 
 		test();
@@ -92,11 +100,13 @@
 						]
 					}
 				}
-			]
+			],
+			functions: function() { return "Sam I am"; }
 		}
 		echo(sprintf("Hello %%(users[0].user.name[1][0])s => Hello %(users[0].user.name[1][0])s<br />", foo));
 		echo(sprintf("Hello %%(users[0].user.name[0])s => Hello %(users[0].user.name[0])s<br />", foo));
-
+		echo(sprintf("Hello %%(functions)s => Hello %(functions)s<br />", foo));
+		echo(sprintf("%%s %%+d => %s %+d<br />", function() { return "Computed"; }, function() { return 10; }));
 		//console.log(sprintf.cache);
 
 		var user = {

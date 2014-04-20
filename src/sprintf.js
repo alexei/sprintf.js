@@ -33,6 +33,11 @@
 					arg = argv[cursor++];
 				}
 
+				// compute functions into their argument value
+				if (get_type(arg) == 'function') {
+					arg = arg();
+				}
+
 				if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
 					throw(sprintf('[sprintf] expecting number but found %s', get_type(arg)));
 				}
