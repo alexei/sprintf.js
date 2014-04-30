@@ -25,7 +25,7 @@
 		echo(sprintf("%%e = '%.10e'<br />", d)); // scientific notation
 		echo(sprintf("%%u = '%u'<br />", n)); // unsigned integer representation of a positive integer
 		echo(sprintf("%%u = '%u'<br />", u)); // unsigned integer representation of a negative integer
-		echo(sprintf("%%f = '%'-10.2f' and %%f = '%010.10f'<br />", d, d)); // floating point representation
+		echo(sprintf("%%f = '%-10.2f' and %%f = '%010.10f'<br />", d, d)); // floating point representation
 		echo(sprintf("%%o = '%o'<br />", n)); // octal representation
 		echo(sprintf("%%s = '%100.10s'<br />", "Ala-bala-portocala")); // string representation
 		echo(sprintf("%%x = '%x'<br />", n)); // hexadecimal representation (lower-case)
@@ -72,6 +72,8 @@
 		echo(sprintf("%%+'_10d = %+'_10d<br />", -123));
 
 		echo(sprintf("%%+.4f = %+.4f<br />", -123.456000));
+
+		echo(sprintf("%%+.1f = %+.1f<br />", -0.01));
 
 		echo(vsprintf("The first 4 letters of the english alphabet are: %4$s, %3$s, %1$s and %2$s<br />", ["c", "d", "b", "a"]));
 		/**/
