@@ -17,6 +17,7 @@
     "license": "BSD",
     "readmeFilename": "README.md",
     "devDependencies": {
+        "mocha": "*",
         "grunt": "*",
         "grunt-contrib-watch": "*",
         "grunt-contrib-uglify": "*"
