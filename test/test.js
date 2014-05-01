@@ -9,6 +9,7 @@ describe("sprintfjs", function() {
         assert.equal("10", sprintf("%b", 2))
         assert.equal("A", sprintf("%c", 65))
         assert.equal("2", sprintf("%d", 2))
+        assert.equal("2", sprintf("%d", "2"))
         assert.equal("2e+0", sprintf("%e", 2))
         assert.equal("2", sprintf("%u", 2))
         assert.equal("4294967294", sprintf("%u", -2))
