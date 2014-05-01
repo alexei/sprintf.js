@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             },
             build: {
                 src: "src/sprintf.js",
-                dest: "src/sprintf.min.js"
+                dest: "dist/sprintf.min.js"
             }
         },
 
