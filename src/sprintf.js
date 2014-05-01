@@ -109,7 +109,7 @@
 	};
 
 	var vsprintf = function(fmt, argv, _argv) {
-		_argv = argv.slice(0);
+		_argv = (argv || []).slice(0);
 		_argv.splice(0, 0, fmt);
 		return sprintf.apply(null, _argv);
 	};
