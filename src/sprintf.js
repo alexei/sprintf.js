@@ -39,16 +39,16 @@
 				switch (match[8]) {
 					case 'b': arg = arg.toString(2); break;
 					case 'c': arg = String.fromCharCode(arg); break;
-					case 'd': arg = parseInt(arg, 10); break;
+					case 'd': arg = parseInt(arg, 10).toString(); break;
 					case 'e': arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential(); break;
-					case 'f': arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg); break;
+					case 'f': arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg).toString(); break;
 					case 'o': arg = arg.toString(8); break;
 					case 's': arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg); break;
-					case 'u': arg = arg >>> 0; break;
+					case 'u': arg = (arg >>> 0).toString(); break;
 					case 'x': arg = arg.toString(16); break;
 					case 'X': arg = arg.toString(16).toUpperCase(); break;
 				}
-				arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? '+'+ arg : arg);
+				arg = (/[def]/.test(match[8]) && match[3] && arg.charAt(0) != '-' ? '+' + arg : arg);
 				pad_character = match[4] ? match[4] == '0' ? '0' : match[4].charAt(1) : ' ';
 				pad_length = match[6] - String(arg).length;
 				pad = match[6] ? str_repeat(pad_character, pad_length) : '';
