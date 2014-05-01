@@ -109,7 +109,7 @@
 	};
 
 	var vsprintf = function(fmt, argv, _argv) {
-		_argv = argv.slice(0);
+		_argv = (argv || []).slice(0);
 		_argv.splice(0, 0, fmt);
 		return sprintf.apply(null, _argv);
 	};
@@ -122,8 +122,7 @@
 	}
 
 	function str_repeat(input, multiplier) {
-		for (var output = []; multiplier > 0; output[--multiplier] = input) {/* do nothing */}
-		return output.join('');
+		return Array(multiplier + 1).join(input)
 	}
 
 	/**
