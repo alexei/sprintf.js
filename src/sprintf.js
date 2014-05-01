@@ -122,8 +122,7 @@
 	}
 
 	function str_repeat(input, multiplier) {
-		for (var output = []; multiplier > 0; output[--multiplier] = input) {/* do nothing */}
-		return output.join('');
+		return Array(multiplier + 1).join(input)
 	}
 
 	/**
