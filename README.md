@@ -54,6 +54,11 @@ Keywords in replacement fields can be optionally followed by any number of keywo
 	sprintf('Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s', {users: users}); // Hello Dolly, Molly and Polly
 Note: mixing positional and named placeholders is not (yet) supported
 
+## Computed values
+You can pass in a function as a dynamic value and it will be invoked (with no arguments) in order to compute the value on-the-fly.
+    sprintf("Current timestamp: %d", Date.now) // Current timestamp: 1398005382890
+    sprintf("Current date and time: %s", function() { return new Date().toString() })
+
 # Installation
 
 ## Via Bower
