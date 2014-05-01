@@ -12,11 +12,12 @@
 		index_access: /^\[(\d+)\]/
 	}
 
-	var sprintf = function() {
-		if (!sprintf.cache.hasOwnProperty(arguments[0])) {
-			sprintf.cache[arguments[0]] = sprintf.parse(arguments[0])
+	function sprintf() {
+		var key = arguments[0], cache = sprintf.cache
+		if (!(cache[key] && cache.hasOwnProperty(key))) {
+			cache[key] = sprintf.parse(key)
 		}
-		return sprintf.format.call(null, sprintf.cache[arguments[0]], arguments)
+		return sprintf.format.call(null, cache[key], arguments)
 	}
 
 	sprintf.format = function(parse_tree, argv) {
