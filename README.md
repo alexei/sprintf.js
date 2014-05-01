@@ -54,13 +54,11 @@ Note: mixing positional and named placeholders is not (yet) supported
 
 # Installation
 
-## via Bower
+## Via Bower
 
 	bower install sprintf
 
-## as a node.js module
-
-### Install
+## Or as a node.js module
 
 	npm install sprintf-js
 
