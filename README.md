@@ -56,6 +56,7 @@ Note: mixing positional and named placeholders is not (yet) supported
 
 ## Computed values
 You can pass in a function as a dynamic value and it will be invoked (with no arguments) in order to compute the value on-the-fly.
+
     sprintf("Current timestamp: %d", Date.now) // Current timestamp: 1398005382890
     sprintf("Current date and time: %s", function() { return new Date().toString() })
 
