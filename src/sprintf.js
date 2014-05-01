@@ -1,6 +1,17 @@
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
 (function(ctx) {
+	var re = {
+		not_string: /[^s]/,
+		number: /[def]/,
+		text: /^[^\x25]+/,
+		modulo: /^\x25{2}/,
+		placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/,
+		key: /^([a-z_][a-z_\d]*)/i,
+		key_access: /^\.([a-z_][a-z_\d]*)/i,
+		index_access: /^\[(\d+)\]/
+	}
+
 	var sprintf = function() {
 		if (!sprintf.cache.hasOwnProperty(arguments[0])) {
 			sprintf.cache[arguments[0]] = sprintf.parse(arguments[0])
@@ -33,7 +44,7 @@
 					arg = argv[cursor++]
 				}
 
-				if (/[^s]/.test(match[8]) && (get_type(arg) != "number")) {
+				if (re.not_string.test(match[8]) && (get_type(arg) != "number")) {
 					throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
 				}
 				switch (match[8]) {
@@ -68,7 +79,7 @@
 						arg = arg.toString(16).toUpperCase()
 					break
 				}
-				arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? "+"+ arg : arg)
+				arg = (re.number.test(match[8]) && match[3] && arg >= 0 ? "+"+ arg : arg)
 				pad_character = match[4] ? match[4] == "0" ? "0" : match[4].charAt(1) : " "
 				pad_length = match[6] - String(arg).length
 				pad = match[6] ? str_repeat(pad_character, pad_length) : ""
@@ -83,23 +94,23 @@
 	sprintf.parse = function(fmt) {
 		var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
 		while (_fmt) {
-			if ((match = /^[^\x25]+/.exec(_fmt)) !== null) {
+			if ((match = re.text.exec(_fmt)) !== null) {
 				parse_tree.push(match[0])
 			}
-			else if ((match = /^\x25{2}/.exec(_fmt)) !== null) {
+			else if ((match = re.modulo.exec(_fmt)) !== null) {
 				parse_tree.push("%")
 			}
-			else if ((match = /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt)) !== null) {
+			else if ((match = re.placeholder.exec(_fmt)) !== null) {
 				if (match[2]) {
 					arg_names |= 1
 					var field_list = [], replacement_field = match[2], field_match = []
-					if ((field_match = /^([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
+					if ((field_match = re.key.exec(replacement_field)) !== null) {
 						field_list.push(field_match[1])
 						while ((replacement_field = replacement_field.substring(field_match[0].length)) !== "") {
-							if ((field_match = /^\.([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
+							if ((field_match = re.key_access.exec(replacement_field)) !== null) {
 								field_list.push(field_match[1])
 							}
-							else if ((field_match = /^\[(\d+)\]/.exec(replacement_field)) !== null) {
+							else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
 								field_list.push(field_match[1])
 							}
 							else {
