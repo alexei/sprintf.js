@@ -7,7 +7,8 @@
         placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
-        index_access: /^\[(\d+)\]/
+        index_access: /^\[(\d+)\]/,
+        sign: /^[\+\-]/
     }
 
     function sprintf() {
@@ -19,7 +20,7 @@
     }
 
     sprintf.format = function(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, node_type = "", arg, output = [], i, k, match, pad, pad_character, pad_length
+        var cursor = 1, tree_length = parse_tree.length, node_type = "", arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive = true, sign = ""
         for (i = 0; i < tree_length; i++) {
             node_type = get_type(parse_tree[i])
             if (node_type === "string") {
@@ -50,6 +51,11 @@
                 if (re.not_string.test(match[8]) && (get_type(arg) != "number" && isNaN(arg))) {
                     throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
                 }
+
+                if (re.number.test(match[8])) {
+                    is_positive = arg >= 0
+                }
+
                 switch (match[8]) {
                     case "b":
                         arg = arg.toString(2)
@@ -82,11 +88,14 @@
                         arg = arg.toString(16).toUpperCase()
                     break
                 }
-                arg = (re.number.test(match[8]) && match[3] && arg >= 0 ? "+"+ arg : arg)
+                if (re.number.test(match[8]) && match[3]) {
+                    sign = is_positive ? "+" : "-"
+                    arg = arg.toString().replace(re.sign, "")
+                }
                 pad_character = match[4] ? match[4] == "0" ? "0" : match[4].charAt(1) : " "
-                pad_length = match[6] - String(arg).length
+                pad_length = match[6] - (sign + arg).length
                 pad = match[6] ? str_repeat(pad_character, pad_length) : ""
-                output[output.length] = match[5] ? arg + pad : pad + arg
+                output[output.length] = match[5] ? sign + arg + pad : (pad_character == 0 ? sign + pad + arg : pad + sign + arg)
             }
         }
         return output.join("")
