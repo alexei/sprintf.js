@@ -25,7 +25,7 @@
 		for (i = 0; i < tree_length; i++) {
 			node_type = get_type(parse_tree[i])
 			if (node_type === "string") {
-				output.push(parse_tree[i])
+				output[output.length] = parse_tree[i]
 			}
 			else if (node_type === "array") {
 				match = parse_tree[i] // convenience purposes only
@@ -84,7 +84,7 @@
 				pad_character = match[4] ? match[4] == "0" ? "0" : match[4].charAt(1) : " "
 				pad_length = match[6] - String(arg).length
 				pad = match[6] ? str_repeat(pad_character, pad_length) : ""
-				output.push(match[5] ? arg + pad : pad + arg)
+				output[output.length] = match[5] ? arg + pad : pad + arg
 			}
 		}
 		return output.join("")
@@ -96,23 +96,23 @@
 		var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
 		while (_fmt) {
 			if ((match = re.text.exec(_fmt)) !== null) {
-				parse_tree.push(match[0])
+				parse_tree[parse_tree.length] = match[0]
 			}
 			else if ((match = re.modulo.exec(_fmt)) !== null) {
-				parse_tree.push("%")
+				parse_tree[parse_tree.length] = "%"
 			}
 			else if ((match = re.placeholder.exec(_fmt)) !== null) {
 				if (match[2]) {
 					arg_names |= 1
 					var field_list = [], replacement_field = match[2], field_match = []
 					if ((field_match = re.key.exec(replacement_field)) !== null) {
-						field_list.push(field_match[1])
+						field_list[field_list.length] = field_match[1]
 						while ((replacement_field = replacement_field.substring(field_match[0].length)) !== "") {
 							if ((field_match = re.key_access.exec(replacement_field)) !== null) {
-								field_list.push(field_match[1])
+								field_list[field_list.length] = field_match[1]
 							}
 							else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
-								field_list.push(field_match[1])
+								field_list[field_list.length] = field_match[1]
 							}
 							else {
 								throw new SyntaxError("[sprintf] failed to parse named argument key")
@@ -130,7 +130,7 @@
 				if (arg_names === 3) {
 					throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported")
 				}
-				parse_tree.push(match)
+				parse_tree[parse_tree.length] = match
 			}
 			else {
 				throw new SyntaxError("[sprintf] unexpected placeholder")
