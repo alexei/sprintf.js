@@ -83,12 +83,12 @@
 								field_list.push(field_match[1]);
 							}
 							else {
-								throw new Error('[sprintf] huh?');
+								throw new SyntaxError('[sprintf] failed to parse named argument key');
 							}
 						}
 					}
 					else {
-						throw new Error('[sprintf] huh?');
+						throw new SyntaxError('[sprintf] failed to parse named argument key');
 					}
 					match[2] = field_list;
 				}
@@ -101,7 +101,7 @@
 				parse_tree.push(match);
 			}
 			else {
-				throw new Error('[sprintf] huh?');
+				throw new SyntaxError('[sprintf] unexpected placeholder');
 			}
 			_fmt = _fmt.substring(match[0].length);
 		}
