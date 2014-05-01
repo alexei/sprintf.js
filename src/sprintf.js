@@ -1,11 +1,23 @@
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
 (function(ctx) {
-	var sprintf = function() {
-		if (!sprintf.cache.hasOwnProperty(arguments[0])) {
-			sprintf.cache[arguments[0]] = sprintf.parse(arguments[0])
+	var re = {
+		not_string: /[^s]/,
+		number: /[def]/,
+		text: /^[^\x25]+/,
+		modulo: /^\x25{2}/,
+		placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/,
+		key: /^([a-z_][a-z_\d]*)/i,
+		key_access: /^\.([a-z_][a-z_\d]*)/i,
+		index_access: /^\[(\d+)\]/
+	}
+
+	function sprintf() {
+		var key = arguments[0], cache = sprintf.cache
+		if (!(cache[key] && cache.hasOwnProperty(key))) {
+			cache[key] = sprintf.parse(key)
 		}
-		return sprintf.format.call(null, sprintf.cache[arguments[0]], arguments)
+		return sprintf.format.call(null, cache[key], arguments)
 	}
 
 	sprintf.format = function(parse_tree, argv) {
@@ -13,7 +25,7 @@
 		for (i = 0; i < tree_length; i++) {
 			node_type = get_type(parse_tree[i])
 			if (node_type === "string") {
-				output.push(parse_tree[i])
+				output[output.length] = parse_tree[i]
 			}
 			else if (node_type === "array") {
 				match = parse_tree[i] // convenience purposes only
@@ -33,7 +45,7 @@
 					arg = argv[cursor++]
 				}
 
-				if (/[^s]/.test(match[8]) && (get_type(arg) != "number")) {
+				if (re.not_string.test(match[8]) && (get_type(arg) != "number")) {
 					throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
 				}
 				switch (match[8]) {
@@ -68,11 +80,11 @@
 						arg = arg.toString(16).toUpperCase()
 					break
 				}
-				arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? "+"+ arg : arg)
+				arg = (re.number.test(match[8]) && match[3] && arg >= 0 ? "+"+ arg : arg)
 				pad_character = match[4] ? match[4] == "0" ? "0" : match[4].charAt(1) : " "
 				pad_length = match[6] - String(arg).length
 				pad = match[6] ? str_repeat(pad_character, pad_length) : ""
-				output.push(match[5] ? arg + pad : pad + arg)
+				output[output.length] = match[5] ? arg + pad : pad + arg
 			}
 		}
 		return output.join("")
@@ -83,24 +95,24 @@
 	sprintf.parse = function(fmt) {
 		var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
 		while (_fmt) {
-			if ((match = /^[^\x25]+/.exec(_fmt)) !== null) {
-				parse_tree.push(match[0])
+			if ((match = re.text.exec(_fmt)) !== null) {
+				parse_tree[parse_tree.length] = match[0]
 			}
-			else if ((match = /^\x25{2}/.exec(_fmt)) !== null) {
-				parse_tree.push("%")
+			else if ((match = re.modulo.exec(_fmt)) !== null) {
+				parse_tree[parse_tree.length] = "%"
 			}
-			else if ((match = /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt)) !== null) {
+			else if ((match = re.placeholder.exec(_fmt)) !== null) {
 				if (match[2]) {
 					arg_names |= 1
 					var field_list = [], replacement_field = match[2], field_match = []
-					if ((field_match = /^([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
-						field_list.push(field_match[1])
+					if ((field_match = re.key.exec(replacement_field)) !== null) {
+						field_list[field_list.length] = field_match[1]
 						while ((replacement_field = replacement_field.substring(field_match[0].length)) !== "") {
-							if ((field_match = /^\.([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
-								field_list.push(field_match[1])
+							if ((field_match = re.key_access.exec(replacement_field)) !== null) {
+								field_list[field_list.length] = field_match[1]
 							}
-							else if ((field_match = /^\[(\d+)\]/.exec(replacement_field)) !== null) {
-								field_list.push(field_match[1])
+							else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
+								field_list[field_list.length] = field_match[1]
 							}
 							else {
 								throw new SyntaxError("[sprintf] failed to parse named argument key")
@@ -118,7 +130,7 @@
 				if (arg_names === 3) {
 					throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported")
 				}
-				parse_tree.push(match)
+				parse_tree[parse_tree.length] = match
 			}
 			else {
 				throw new SyntaxError("[sprintf] unexpected placeholder")
