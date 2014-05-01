@@ -6,6 +6,8 @@ Its prototype is simple:
 	string sprintf(string format , [mixed arg1 [, mixed arg2 [ ,...]]]);
 
 The placeholders in the format string are marked by "%" and are followed by one or more of these elements, in this order:
+
+* An optional number followed by a "$" sign that selects which argument index to use for the value. If not specified, arguments will be placed in the same order as the placeholders in the input string.
 * An optional "+" sign that forces to preceed the result with a plus or minus sign on numeric values. By default, only the "-" sign is used on negative numbers.
 * An optional padding specifier that says what character to use for padding (if specified). Possible values are 0 or any other character precedeed by a '. The default is to pad with spaces.
 * An optional "-" sign, that causes sprintf to left-align the result of this placeholder. The default is to right-align the result.
