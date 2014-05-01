@@ -1,5 +1,3 @@
-/*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
-
 (function(window) {
     var re = {
         not_string: /[^s]/,
