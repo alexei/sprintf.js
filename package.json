@@ -14,7 +14,7 @@
         "url": "https://github.com/alexei/sprintf.js.git"
     },
     "author": "Alexandru Marasteanu <hello@alexei.ro> (http://alexei.ro/)",
-    "license": "BSD",
+    "license": "BSD-3-Clause",
     "readmeFilename": "README.md",
     "devDependencies": {
         "mocha": "*",
