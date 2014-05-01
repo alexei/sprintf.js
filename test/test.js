@@ -50,4 +50,9 @@ describe("sprintfjs", function() {
         assert.equal("xxxxx", sprintf("%5.5s", "xxxxxx"))
         assert.equal("    x", sprintf("%5.1s", "xxxxxx"))
     })
+
+    it("should return formated strings for callbacks", function() {
+        assert.equal("foobar", sprintf("%s", function() { return "foobar" }))
+        assert.equal(Date.now(), sprintf("%s", Date.now)) // should pass...
+    })
 })

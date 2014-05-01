@@ -43,6 +43,10 @@
                     arg = argv[cursor++]
                 }
 
+                if (get_type(arg) == "function") {
+                    arg = arg()
+                }
+
                 if (re.not_string.test(match[8]) && (get_type(arg) != "number" && isNaN(arg))) {
                     throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
                 }
