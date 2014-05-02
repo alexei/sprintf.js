@@ -1,19 +1,16 @@
 {
     "name": "sprintf-js",
-    "version": "0.0.7",
+    "version": "1.0",
     "description": "JavaScript sprintf implementation",
+    "author": "Alexandru Marasteanu <hello@alexei.ro> (http://alexei.ro/)",
     "main": "src/sprintf.js",
-    "directories": {
-        "test": "test"
-    },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "mocha test/test.js"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/alexei/sprintf.js.git"
     },
-    "author": "Alexandru Marasteanu <hello@alexei.ro> (http://alexei.ro/)",
     "license": "BSD-3-Clause",
     "readmeFilename": "README.md",
     "devDependencies": {
