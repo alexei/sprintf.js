@@ -88,7 +88,7 @@
                         arg = arg.toString(16).toUpperCase()
                     break
                 }
-                if (re.number.test(match[8]) && match[3]) {
+                if (!is_positive || (re.number.test(match[8]) && match[3])) {
                     sign = is_positive ? "+" : "-"
                     arg = arg.toString().replace(re.sign, "")
                 }
