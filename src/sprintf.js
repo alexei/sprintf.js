@@ -92,10 +92,10 @@
                     sign = is_positive ? "+" : "-"
                     arg = arg.toString().replace(re.sign, "")
                 }
-                pad_character = match[4] ? match[4] == "0" ? "0" : match[4].charAt(1) : " "
+                pad_character = match[4] ? match[4] === "0" ? "0" : match[4].charAt(1) : " "
                 pad_length = match[6] - (sign + arg).length
                 pad = match[6] ? str_repeat(pad_character, pad_length) : ""
-                output[output.length] = match[5] ? sign + arg + pad : (pad_character == 0 ? sign + pad + arg : pad + sign + arg)
+                output[output.length] = match[5] ? sign + arg + pad : (pad_character === "0" ? sign + pad + arg : pad + sign + arg)
             }
         }
         return output.join("")
