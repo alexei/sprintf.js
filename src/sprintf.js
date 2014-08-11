@@ -188,4 +188,4 @@
             })
         }
     }
-})(typeof window === "undefined" ? this : window)
+})(typeof window === "undefined" ? this : window);
