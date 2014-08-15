@@ -92,7 +92,8 @@
                 if (!is_positive || (re.number.test(match[8]) && match[3])) {
                     sign = is_positive ? "+" : "-"
                     arg = arg.toString().replace(re.sign, "")
-                }else{
+                }
+                else {
                     sign = ""
                 }
                 pad_character = match[4] ? match[4] === "0" ? "0" : match[4].charAt(1) : " "
