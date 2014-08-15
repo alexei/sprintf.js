@@ -17,7 +17,7 @@ The placeholders in the format string are marked by "%" and are followed by one 
     * % — print a literal "%" character
     * b — print an integer as a binary number
     * c — print an integer as the character with that ASCII value
-    * d — print an integer as a signed decimal number
+    * d or i — print an integer as a signed decimal number
     * e — print a float as scientific notation
     * u — print an integer as an unsigned decimal number
     * f — print a float as is

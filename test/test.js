@@ -9,7 +9,9 @@ describe("sprintfjs", function() {
         assert.equal("10", sprintf("%b", 2))
         assert.equal("A", sprintf("%c", 65))
         assert.equal("2", sprintf("%d", 2))
+        assert.equal("2", sprintf("%i", 2))
         assert.equal("2", sprintf("%d", "2"))
+        assert.equal("2", sprintf("%i", "2"))
         assert.equal("2e+0", sprintf("%e", 2))
         assert.equal("2", sprintf("%u", 2))
         assert.equal("4294967294", sprintf("%u", -2))
@@ -28,6 +30,10 @@ describe("sprintfjs", function() {
         assert.equal("-2", sprintf("%d", -2))
         assert.equal("+2", sprintf("%+d", 2))
         assert.equal("-2", sprintf("%+d", -2))
+        assert.equal("2", sprintf("%i", 2))
+        assert.equal("-2", sprintf("%i", -2))
+        assert.equal("+2", sprintf("%+i", 2))
+        assert.equal("-2", sprintf("%+i", -2))
         assert.equal("2.2", sprintf("%f", 2.2))
         assert.equal("-2.2", sprintf("%f", -2.2))
         assert.equal("+2.2", sprintf("%+f", 2.2))
@@ -39,6 +45,7 @@ describe("sprintfjs", function() {
 
         // padding
         assert.equal("-0002", sprintf("%05d", -2))
+        assert.equal("-0002", sprintf("%05i", -2))
         assert.equal("    <", sprintf("%5s", "<"))
         assert.equal("0000<", sprintf("%05s", "<"))
         assert.equal("____<", sprintf("%'_5s", "<"))

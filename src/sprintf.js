@@ -1,10 +1,10 @@
 (function(window) {
     var re = {
         not_string: /[^s]/,
-        number: /[def]/,
+        number: /[dief]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fiosuxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -64,6 +64,7 @@
                         arg = String.fromCharCode(arg)
                     break
                     case "d":
+                    case "i":
                         arg = parseInt(arg, 10)
                     break
                     case "e":
