@@ -3,7 +3,7 @@ sprintf.js is a complete open source JavaScript sprintf implementation for the *
 
 Its prototype is simple:
 
-	string sprintf(string format , [mixed arg1 [, mixed arg2 [ ,...]]]);
+    string sprintf(string format , [mixed arg1 [, mixed arg2 [ ,...]]]);
 
 The placeholders in the format string are marked by "%" and are followed by one or more of these elements, in this order:
 
@@ -29,29 +29,29 @@ The placeholders in the format string are marked by "%" and are followed by one 
 ## JavaScript vsprintf()
 vsprintf() is the same as sprintf() except that it accepts an array of arguments, rather than a variable number of arguments:
 
-	vsprintf('The first 4 letters of the english alphabet are: %s, %s, %s and %s', ['a', 'b', 'c', 'd']);
+    vsprintf('The first 4 letters of the english alphabet are: %s, %s, %s and %s', ['a', 'b', 'c', 'd']);
 
 ## Argument swapping
 You can also swap the arguments. That is, the order of the placeholders doesn't have to match the order of the arguments. You can do that by simply indicating in the format string which arguments the placeholders refer to:
 
-	sprintf('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants');
+    sprintf('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants');
 And, of course, you can repeat the placeholders without having to increase the number of arguments.
 
 ## Named arguments
 Format strings may contain replacement fields rather than positional placeholders. Instead of referring to a certain argument, you can now refer to a certain key within an object. Replacement fields are surrounded by rounded parentheses () and begin with a keyword that refers to a key:
 
-	var user = {
-		name: 'Dolly'
-	};
-	sprintf('Hello %(name)s', user); // Hello Dolly
+    var user = {
+        name: 'Dolly'
+    };
+    sprintf('Hello %(name)s', user); // Hello Dolly
 Keywords in replacement fields can be optionally followed by any number of keywords or indexes:
 
-	var users = [
-		{name: 'Dolly'},
-		{name: 'Molly'},
-		{name: 'Polly'}
-	];
-	sprintf('Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s', {users: users}); // Hello Dolly, Molly and Polly
+    var users = [
+        {name: 'Dolly'},
+        {name: 'Molly'},
+        {name: 'Polly'}
+    ];
+    sprintf('Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s', {users: users}); // Hello Dolly, Molly and Polly
 Note: mixing positional and named placeholders is not (yet) supported
 
 ## Computed values
@@ -67,16 +67,16 @@ You can now use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respe
 
 ## Via Bower
 
-	bower install sprintf
+    bower install sprintf
 
 ## Or as a node.js module
 
-	npm install sprintf-js
+    npm install sprintf-js
 
 ### Usage
 
-	var sprintf = require("sprintf-js").sprintf,
-		vsprintf = require("sprintf-js").vsprintf;
+    var sprintf = require("sprintf-js").sprintf,
+        vsprintf = require("sprintf-js").vsprintf;
 
-	console.log(sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants"));
-	console.log(vsprintf("The first 4 letters of the english alphabet are: %s, %s, %s and %s", ["a", "b", "c", "d"]));
+    console.log(sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants"));
+    console.log(vsprintf("The first 4 letters of the english alphabet are: %s, %s, %s and %s", ["a", "b", "c", "d"]));
