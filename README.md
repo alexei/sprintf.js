@@ -14,17 +14,17 @@ The placeholders in the format string are marked by `%` and are followed by one 
 * An optional number, that says how many characters the result should have. If the value to be returned is shorter than this number, the result will be padded.
 * An optional precision modifier, consisting of a `.` (dot) followed by a number, that says how many digits should be displayed for floating point numbers. When used on a string, it causes the result to be truncated.
 * A type specifier that can be any of:
-    * `%` — print a literal `%` character
-    * `b` — print an integer as a binary number
-    * `c` — print an integer as the character with that ASCII value
-    * `d` or `i` — print an integer as a signed decimal number
-    * `e` — print a float as scientific notation
-    * `u` — print an integer as an unsigned decimal number
-    * `f` — print a float as is
-    * `o` — print an integer as an octal number
-    * `s` — print a string as is
-    * `x` — print an integer as a hexadecimal number (lower-case)
-    * `X` — print an integer as a hexadecimal number (upper-case)
+    * `%` — yields a literal `%` character
+    * `b` — yields an integer as a binary number
+    * `c` — yields an integer as the character with that ASCII value
+    * `d` or `i` — yields an integer as a signed decimal number
+    * `e` — yields a float using scientific notation
+    * `u` — yields an integer as an unsigned decimal number
+    * `f` — yields a float as is
+    * `o` — yields an integer as an octal number
+    * `s` — yields a string as is
+    * `x` — yields an integer as a hexadecimal number (lower-case)
+    * `X` — yields an integer as a hexadecimal number (upper-case)
 
 ## JavaScript `vsprintf`
 `vsprintf` is the same as `sprintf` except that it accepts an array of arguments, rather than a variable number of arguments:
