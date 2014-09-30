@@ -60,6 +60,9 @@ You can pass in a function as a dynamic value and it will be invoked (with no ar
     sprintf("Current timestamp: %d", Date.now) // Current timestamp: 1398005382890
     sprintf("Current date and time: %s", function() { return new Date().toString() })
 
+# AngularJS
+You can now use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respectively) in your AngularJS projects. See demo
+
 # Installation
 
 ## Via Bower
