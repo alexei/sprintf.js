@@ -42,7 +42,7 @@ Format strings may contain replacement fields rather than positional placeholder
 
     var user = {
         name: "Dolly"
-    };
+    }
     sprintf("Hello %(name)s", user) // Hello Dolly
 Keywords in replacement fields can be optionally followed by any number of keywords or indexes:
 
