@@ -12,14 +12,24 @@
     }
 
     function sprintf() {
-        var key = arguments[0], cache = sprintf.cache
-        if (!(cache[key] && cache.hasOwnProperty(key))) {
-            cache[key] = sprintf.parse(key)
-        }
-        return sprintf.format.call(null, cache[key], arguments)
+        return sprintf.format.call(null, sprintf.cached(arguments[0]), arguments, String)
     }
 
-    sprintf.format = function(parse_tree, argv) {
+    function hprintf() {
+        return sprintf.format.call(null, sprintf.cached(arguments[0]), arguments, function(arg) {
+            return arg.replace(/[<&'"]/g, function(ch) {
+                return { '<': '&lt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[ch]
+            })
+        })
+    }
+
+    function uprintf() {
+        return sprintf.format.call(null, sprintf.cached(arguments[0]), arguments, function(arg) {
+            return encodeURIComponent(arg)
+        })
+    }
+
+    sprintf.format = function(parse_tree, argv, escape) {
         var cursor = 1, tree_length = parse_tree.length, node_type = "", arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive = true, sign = ""
         for (i = 0; i < tree_length; i++) {
             node_type = get_type(parse_tree[i])
@@ -99,13 +109,21 @@
                 pad_character = match[4] ? match[4] === "0" ? "0" : match[4].charAt(1) : " "
                 pad_length = match[6] - (sign + arg).length
                 pad = match[6] ? (pad_length > 0 ? str_repeat(pad_character, pad_length) : "") : ""
-                output[output.length] = match[5] ? sign + arg + pad : (pad_character === "0" ? sign + pad + arg : pad + sign + arg)
+                output[output.length] = escape(match[5] ? sign + arg + pad : (pad_character === "0" ? sign + pad + arg : pad + sign + arg))
             }
         }
         return output.join("")
     }
 
     sprintf.cache = {}
+
+    sprintf.cached = function(key) {
+        var cache = sprintf.cache
+        if (!(cache[key] && cache.hasOwnProperty(key))) {
+            cache[key] = sprintf.parse(key)
+        }
+        return cache[key]
+    }
 
     sprintf.parse = function(fmt) {
         var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
@@ -161,6 +179,18 @@
         return sprintf.apply(null, _argv)
     }
 
+    var vhprintf = function(fmt, argv, _argv) {
+        _argv = argv.slice(0)
+        _argv.splice(0, 0, fmt)
+        return hprintf.apply(null, _argv)
+    }
+
+    var vuprintf = function(fmt, argv, _argv) {
+        _argv = argv.slice(0)
+        _argv.splice(0, 0, fmt)
+        return uprintf.apply(null, _argv)
+    }
+
     /**
      * helpers
      */
@@ -178,10 +208,18 @@
     if (typeof exports !== "undefined") {
         exports.sprintf = sprintf
         exports.vsprintf = vsprintf
+        exports.hprintf = hprintf
+        exports.vhprintf = vhprintf
+        exports.uprintf = uprintf
+        exports.vuprintf = vuprintf
     }
     else {
         window.sprintf = sprintf
         window.vsprintf = vsprintf
+        window.hprintf = hprintf
+        window.vhprintf = vhprintf
+        window.uprintf = uprintf
+        window.vuprintf = vuprintf
 
         if (typeof define === "function" && define.amd) {
             define(function() {
