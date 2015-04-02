@@ -81,6 +81,10 @@ You can now use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respe
     sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants")
     vsprintf("The first 4 letters of the english alphabet are: %s, %s, %s and %s", ["a", "b", "c", "d"])
 
+# Around sprintf-js
+
+* [sprintf-mock](https://github.com/M6Web/sprintf-mock) - mock sprintf-js behaviour by returning data fixtures based on the resolved pattern and parameters
+
 # License
 
 **sprintf.js** is licensed under the terms of the 3-clause BSD license.
