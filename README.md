@@ -11,7 +11,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
 * An optional `+` sign that forces to preceed the result with a plus or minus sign on numeric values. By default, only the `-` sign is used on negative numbers.
 * An optional padding specifier that says what character to use for padding (if specified). Possible values are `0` or any other character precedeed by a `'` (single quote). The default is to pad with *spaces*.
 * An optional `-` sign, that causes sprintf to left-align the result of this placeholder. The default is to right-align the result.
-* An optional number, that says how many characters the result should have. If the value to be returned is shorter than this number, the result will be padded.
+* An optional number, that says how many characters the result should have. If the value to be returned is shorter than this number, the result will be padded. When used with the `j` (JSON) type specifier, the padding length specifies the tab size used for indentation.
 * An optional precision modifier, consisting of a `.` (dot) followed by a number, that says how many digits should be displayed for floating point numbers. When used on a string, it causes the result to be truncated.
 * A type specifier that can be any of:
     * `%` — yields a literal `%` character
@@ -25,6 +25,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `s` — yields a string as is
     * `x` — yields an integer as a hexadecimal number (lower-case)
     * `X` — yields an integer as a hexadecimal number (upper-case)
+    * `j` — yields a JavaScript object or array as a JSON encoded string
 
 ## JavaScript `vsprintf`
 `vsprintf` is the same as `sprintf` except that it accepts an array of arguments, rather than a variable number of arguments:
