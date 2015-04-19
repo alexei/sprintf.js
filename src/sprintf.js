@@ -70,7 +70,7 @@
                         arg = parseInt(arg, 10)
                     break
                     case "j":
-                        arg = JSON.stringify(arg)
+                        arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
                     break
                     case "e":
                         arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential()

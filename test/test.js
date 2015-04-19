@@ -59,6 +59,8 @@ describe("sprintfjs", function() {
         assert.equal("1234", sprintf("%02u", 1234))
         assert.equal(" -10.235", sprintf("%8.3f", -10.23456))
         assert.equal("-12.34 xxx", sprintf("%f %s", -12.34, "xxx"))
+        assert.equal('{\n  "foo": "bar"\n}', sprintf("%2j", {foo: "bar"}))
+        assert.equal('[\n  "foo",\n  "bar"\n]', sprintf("%2j", ["foo", "bar"]))
 
         // precision
         assert.equal("2.3", sprintf("%.1f", 2.345))
