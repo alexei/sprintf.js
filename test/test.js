@@ -12,6 +12,8 @@ describe("sprintfjs", function() {
         assert.equal("2", sprintf("%i", 2))
         assert.equal("2", sprintf("%d", "2"))
         assert.equal("2", sprintf("%i", "2"))
+        assert.equal('{"foo":"bar"}', sprintf("%j", {foo: "bar"}))
+        assert.equal('["foo","bar"]', sprintf("%j", ["foo", "bar"]))
         assert.equal("2e+0", sprintf("%e", 2))
         assert.equal("2", sprintf("%u", 2))
         assert.equal("4294967294", sprintf("%u", -2))
