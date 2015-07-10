@@ -4,6 +4,8 @@ var assert = require("assert"),
     vsprintf = sprintfjs.vsprintf
 
 describe("sprintfjs", function() {
+    var pi = 3.141592653589793
+
     it("should return formated strings for simple placeholders", function() {
         assert.equal("%", sprintf("%%"))
         assert.equal("10", sprintf("%b", 2))
@@ -18,6 +20,7 @@ describe("sprintfjs", function() {
         assert.equal("2", sprintf("%u", 2))
         assert.equal("4294967294", sprintf("%u", -2))
         assert.equal("2.2", sprintf("%f", 2.2))
+        assert.equal("3.141592653589793", sprintf("%g", pi))
         assert.equal("10", sprintf("%o", 8))
         assert.equal("%s", sprintf("%s", "%s"))
         assert.equal("ff", sprintf("%x", 255))
@@ -42,6 +45,9 @@ describe("sprintfjs", function() {
         assert.equal("-2.2", sprintf("%+f", -2.2))
         assert.equal("-2.3", sprintf("%+.1f", -2.34))
         assert.equal("-0.0", sprintf("%+.1f", -0.01))
+        assert.equal("3.14159", sprintf("%.6g", pi))
+        assert.equal("3.14", sprintf("%.3g", pi))
+        assert.equal("3", sprintf("%.1g", pi))
         assert.equal("-000000123", sprintf("%+010d", -123))
         assert.equal("______-123", sprintf("%+'_10d", -123))
         assert.equal("-234.34 123.2", sprintf("%f %f", -234.34, 123.2))
