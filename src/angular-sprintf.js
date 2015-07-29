@@ -15,4 +15,4 @@ angular.
     }).
     filter("vfmt", ["$filter", function($filter) {
         return $filter("vsprintf")
-    }])
+    }]);
