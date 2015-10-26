@@ -183,6 +183,7 @@
     var preformattedPadding = {
         '0': ['', '0', '00', '000', '0000', '00000', '000000', '0000000'],
         ' ': ['', ' ', '  ', '   ', '    ', '     ', '      ', '       '],
+        '_': ['', '_', '__', '___', '____', '_____', '______', '_______'],
     }
     function str_repeat(input, multiplier) {
         if (multiplier >= 0 && multiplier <= 7 && preformattedPadding[input]) {
