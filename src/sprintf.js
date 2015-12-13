@@ -178,10 +178,20 @@
      * helpers
      */
     function get_type(variable) {
+        if (typeof variable === 'number') return 'number'
+        if (typeof variable === 'string') return 'string'
         return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
     }
 
+    var preformattedPadding = {
+        '0': ['', '0', '00', '000', '0000', '00000', '000000', '0000000'],
+        ' ': ['', ' ', '  ', '   ', '    ', '     ', '      ', '       '],
+        '_': ['', '_', '__', '___', '____', '_____', '______', '_______'],
+    }
     function str_repeat(input, multiplier) {
+        if (multiplier >= 0 && multiplier <= 7 && preformattedPadding[input]) {
+            return preformattedPadding[input][multiplier]
+        }
         return Array(multiplier + 1).join(input)
     }
 
