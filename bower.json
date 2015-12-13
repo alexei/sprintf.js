@@ -10,5 +10,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/alexei/sprintf.js.git"
-  }
+  },
+  "ignore": []
 }
