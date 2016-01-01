@@ -60,10 +60,10 @@
 
                 switch (match[8]) {
                     case "b":
-                        arg = arg.toString(2)
+                        arg = parseInt(arg, 10).toString(2)
                     break
                     case "c":
-                        arg = String.fromCharCode(arg)
+                        arg = String.fromCharCode(parseInt(arg, 10))
                     break
                     case "d":
                     case "i":
@@ -88,13 +88,13 @@
                         arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case "u":
-                        arg = arg >>> 0
+                        arg = parseInt(arg, 10) >>> 0
                     break
                     case "x":
-                        arg = arg.toString(16)
+                        arg = parseInt(arg, 10).toString(16)
                     break
                     case "X":
-                        arg = arg.toString(16).toUpperCase()
+                        arg = parseInt(arg, 10).toString(16).toUpperCase()
                     break
                 }
                 if (re.json.test(match[8])) {
