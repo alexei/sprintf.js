@@ -178,9 +178,15 @@
      * helpers
      */
     function get_type(variable) {
-        if (typeof variable === 'number') return 'number'
-        if (typeof variable === 'string') return 'string'
-        return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
+        if (typeof variable === 'number') {
+            return 'number'
+        }
+        else if (typeof variable === 'string') {
+            return 'string'
+        }
+        else {
+            return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
+        }
     }
 
     var preformattedPadding = {
