@@ -73,7 +73,7 @@
                         arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
                     break
                     case "e":
-                        arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential()
+                        arg = match[7] ? parseFloat(arg).toExponential(match[7]) : parseFloat(arg).toExponential()
                     break
                     case "f":
                         arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
