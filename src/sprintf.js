@@ -3,13 +3,14 @@
         not_string: /[^s]/,
         not_bool: /[^t]/,
         not_type: /[^T]/,
+        not_primitive: /[^v]/,
         number: /[diefg]/,
         numeric_arg: /bcdiefguxX/,
         json: /[j]/,
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -49,7 +50,7 @@
                     arg = argv[cursor++]
                 }
 
-                if (re.not_type.test(match[8]) && get_type(arg) == 'function') {
+                if (re.not_type.test(match[8]) && re.not_primitive.test(match[8]) && get_type(arg) == 'function') {
                     arg = arg()
                 }
 
@@ -100,6 +101,10 @@
                     break
                     case 'u':
                         arg = parseInt(arg, 10) >>> 0
+                    break
+                    case 'v':
+                        arg = arg.valueOf()
+                        arg = (match[6] ? arg.substring(0, match[6]) : arg)
                     break
                     case 'x':
                         arg = parseInt(arg, 10).toString(16)
