@@ -25,12 +25,11 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `o` — yields an integer as an octal number
     * `s` — yields a string as is
     * `t` — yields `true` or `false`
-    * `T` — yields the type of the argument<sup>[1](#fn1)</sup>
+    * `T` — yields the type of the argument<sup><a href="#fn-1" name="fn-ref-1">1</a></sup>
     * `x` — yields an integer as a hexadecimal number (lower-case)
     * `X` — yields an integer as a hexadecimal number (upper-case)
     * `j` — yields a JavaScript object or array as a JSON encoded string
 
-<a name="fn1">1</a> `sprintf` doesn't use the `typeof` operator. As such, the value `null` is a `null`, an array is an `array` (not an `object`), a date value is a `date` etc.
 
 ## JavaScript `vsprintf`
 `vsprintf` is the same as `sprintf` except that it accepts an array of arguments, rather than a variable number of arguments:
@@ -90,3 +89,7 @@ You can now use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respe
 # License
 
 **sprintf.js** is licensed under the terms of the 3-clause BSD license.
+
+# Notes
+
+<small><sup><a href="#fn-ref-1" name="fn-1">1</a></sup> `sprintf` doesn't use the `typeof` operator. As such, the value `null` is a `null`, an array is an `array` (not an `object`), a date value is a `date` etc.</small>
