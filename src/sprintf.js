@@ -89,7 +89,8 @@
                         arg = arg.toString(8)
                     break
                     case 's':
-                        arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg)
+                        arg = String(arg)
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 't':
                         arg = String(!!arg)
