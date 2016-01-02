@@ -27,6 +27,14 @@ describe("sprintfjs", function() {
         assert.equal("FF", sprintf("%X", 255))
         assert.equal("Polly wants a cracker", sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants"))
         assert.equal("Hello world!", sprintf("Hello %(who)s!", {"who": "world"}))
+        assert.equal("true", sprintf("%t", true))
+        assert.equal("t", sprintf("%1t", true))
+        assert.equal("true", sprintf("%t", "true"))
+        assert.equal("true", sprintf("%t", 1))
+        assert.equal("false", sprintf("%t", false))
+        assert.equal("f", sprintf("%1t", false))
+        assert.equal("false", sprintf("%t", ""))
+        assert.equal("false", sprintf("%t", 0))
     })
 
     it("should return formated strings for complex placeholders", function() {

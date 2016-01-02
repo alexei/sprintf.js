@@ -24,6 +24,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `g` — yields a float as is; see notes on precision above
     * `o` — yields an integer as an octal number
     * `s` — yields a string as is
+    * `t` — yields `true` or `false`
     * `x` — yields an integer as a hexadecimal number (lower-case)
     * `X` — yields an integer as a hexadecimal number (upper-case)
     * `j` — yields a JavaScript object or array as a JSON encoded string
