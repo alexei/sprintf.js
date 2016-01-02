@@ -35,6 +35,16 @@ describe("sprintfjs", function() {
         assert.equal("f", sprintf("%1t", false))
         assert.equal("false", sprintf("%t", ""))
         assert.equal("false", sprintf("%t", 0))
+
+        assert.equal('undefined', sprintf('%T', undefined))
+        assert.equal('null', sprintf('%T', null))
+        assert.equal('boolean', sprintf('%T', true))
+        assert.equal('number', sprintf('%T', 42))
+        assert.equal('string', sprintf('%T', "This is a string"))
+        assert.equal('function', sprintf('%T', Math.log))
+        assert.equal('array', sprintf('%T', [1, 2, 3]))
+        assert.equal('object', sprintf('%T', {foo: 'bar'}))
+        assert.equal('regexp', sprintf('%T', /<("[^"]*"|'[^']*'|[^'">])*>/))
     })
 
     it("should return formated strings for complex placeholders", function() {

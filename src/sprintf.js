@@ -2,12 +2,14 @@
     var re = {
         not_string: /[^s]/,
         not_bool: /[^t]/,
+        not_type: /[^T]/,
         number: /[diefg]/,
+        numeric_arg: /bcdiefguxX/,
         json: /[j]/,
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostuxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -47,11 +49,11 @@
                     arg = argv[cursor++]
                 }
 
-                if (get_type(arg) == 'function') {
+                if (re.not_type.test(match[8]) && get_type(arg) == 'function') {
                     arg = arg()
                 }
 
-                if (re.not_string.test(match[8]) && re.not_bool.test(match[8]) && re.not_json.test(match[8]) && (get_type(arg) != 'number' && isNaN(arg))) {
+                if (re.numeric_arg.test(match[8]) && (get_type(arg) != 'number' && isNaN(arg))) {
                     throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
                 }
 
@@ -90,6 +92,10 @@
                     break
                     case 't':
                         arg = String(!!arg)
+                        arg = (match[6] ? arg.substring(0, match[6]) : arg)
+                    break
+                    case 'T':
+                        arg = get_type(arg)
                         arg = (match[6] ? arg.substring(0, match[6]) : arg)
                     break
                     case 'u':
