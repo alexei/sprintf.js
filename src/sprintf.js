@@ -93,18 +93,18 @@
                     break
                     case 't':
                         arg = String(!!arg)
-                        arg = (match[6] ? arg.substring(0, match[6]) : arg)
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 'T':
                         arg = get_type(arg)
-                        arg = (match[6] ? arg.substring(0, match[6]) : arg)
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 'u':
                         arg = parseInt(arg, 10) >>> 0
                     break
                     case 'v':
                         arg = arg.valueOf()
-                        arg = (match[6] ? arg.substring(0, match[6]) : arg)
+                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 'x':
                         arg = parseInt(arg, 10).toString(16)
