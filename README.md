@@ -1,4 +1,14 @@
-# sprintf.js
+# sprintf.js [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
+
+[npm-image]: https://badge.fury.io/js/sprintf-js.svg
+[npm-url]: https://badge.fury.io/js/sprintf-js
+
+[dependencies-image]: https://david-dm.org/alexei/sprintf.js.svg
+[dependencies-url]: https://david-dm.org/alexei/sprintf.js
+
+[dev-dependencies-image]: https://david-dm.org/alexei/sprintf.js/dev-status.svg
+[dev-dependencies-url]: https://david-dm.org/alexei/sprintf.js#info=devDependencies
+
 **sprintf.js** is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
 
 Its prototype is simple:
