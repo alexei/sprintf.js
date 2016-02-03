@@ -1,3 +1,4 @@
+"use strict";
 (function(window) {
     var re = {
         not_string: /[^s]/,
