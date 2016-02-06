@@ -1,4 +1,3 @@
-"use strict";
 sprintf = require("../").sprintf
 qprintf = require("../../../node/npm/qprintf").sprintf
 

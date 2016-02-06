@@ -1,4 +1,3 @@
-"use strict";
 var assert = require("assert"),
     sprintfjs = require("../src/sprintf.js"),
     sprintf = sprintfjs.sprintf,
