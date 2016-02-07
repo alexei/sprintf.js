@@ -2,7 +2,7 @@
   "name": "sprintf-js",
   "version": "1.0.3",
   "description": "JavaScript sprintf implementation",
-  "author": "Alexandru Marasteanu <hello@alexei.ro> (http://alexei.ro/)",
+  "author": "Alexandru Marasteanu <hello@alexei.ro>",
   "main": "src/sprintf.js",
   "scripts": {
     "test": "mocha test/test.js"
@@ -15,6 +15,7 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-header": "^1.7.1",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
