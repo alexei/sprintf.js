@@ -7,6 +7,7 @@ var pkg         = require('./package.json'),
     sourcemaps  = require('gulp-sourcemaps'),
     header      = require('gulp-header'),
     jshint      = require('gulp-jshint'),
+    mocha       = require('gulp-mocha'),
     banner      = '/*! <%= pkg.name %> v<%= pkg.version %> | Copyright (c) 2007-present, <%= pkg.author %> | <%= pkg.license %> */\n'
 
 gulp.task('lint', function() {
@@ -16,7 +17,13 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'))
 })
 
-gulp.task('dist', ['lint'], function() {
+gulp.task('test', ['lint'], function() {
+    return gulp
+        .src('test/*.js', {read: false})
+        .pipe(mocha({reporter: 'nyan'}));
+})
+
+gulp.task('dist', ['test'], function() {
     return gulp.src([
             'src/*.js'
         ])
