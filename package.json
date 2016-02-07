@@ -14,7 +14,9 @@
   "license": "BSD-3-Clause",
   "readmeFilename": "README.md",
   "devDependencies": {
+    "benchmark": "^2.1.0",
     "gulp": "^3.9.0",
+    "gulp-benchmark": "^1.1.1",
     "gulp-header": "^1.7.1",
     "gulp-jshint": "^2.0.0",
     "gulp-mocha": "^2.2.0",

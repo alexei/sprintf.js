@@ -8,7 +8,14 @@ var pkg         = require('./package.json'),
     header      = require('gulp-header'),
     jshint      = require('gulp-jshint'),
     mocha       = require('gulp-mocha'),
+    benchmark   = require('gulp-benchmark'),
     banner      = '/*! <%= pkg.name %> v<%= pkg.version %> | Copyright (c) 2007-present, <%= pkg.author %> | <%= pkg.license %> */\n'
+
+gulp.task('benchmark', function () {
+    return gulp
+        .src('benchmark/*.js', {read: false})
+        .pipe(benchmark())
+});
 
 gulp.task('lint', function() {
     return gulp
