@@ -1,5 +1,6 @@
 (function(window) {
-    'use strict';
+    'use strict'
+
     var re = {
         not_string: /[^s]/,
         not_bool: /[^t]/,
