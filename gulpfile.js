@@ -6,9 +6,17 @@ var pkg         = require('./package.json'),
     rename      = require('gulp-rename'),
     sourcemaps  = require('gulp-sourcemaps'),
     header      = require('gulp-header'),
+    jshint      = require('gulp-jshint'),
     banner      = '/*! <%= pkg.name %> v<%= pkg.version %> | Copyright (c) 2007-present, <%= pkg.author %> | <%= pkg.license %> */\n'
 
-gulp.task('dist', function() {
+gulp.task('lint', function() {
+    return gulp
+        .src('src/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+})
+
+gulp.task('dist', ['lint'], function() {
     return gulp.src([
             'src/*.js'
         ])

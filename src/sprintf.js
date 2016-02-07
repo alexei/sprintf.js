@@ -1,3 +1,5 @@
+/* globals window, exports, define */
+
 (function(window) {
     'use strict'
 
