@@ -1,3 +1,5 @@
+/* globals angular, sprintf, vsprintf */
+
 (function () {
     'use strict'
 
