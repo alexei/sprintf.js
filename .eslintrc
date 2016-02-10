@@ -1,0 +1,10 @@
+extends: eslint:recommended
+
+env:
+  es6: true
+  node: true
+  mocha: true
+
+rules:
+  strict: [2, "global"]
+  comma-spacing: [1, {"before": false, "after": true}]
