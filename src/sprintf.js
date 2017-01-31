@@ -9,7 +9,7 @@
         not_type: /[^T]/,
         not_primitive: /[^v]/,
         number: /[diefg]/,
-        numeric_arg: /bcdiefguxX/,
+        numeric_arg: /[bcdiefguxX]/,
         json: /[j]/,
         not_json: /[^j]/,
         text: /^[^\x25]+/,
