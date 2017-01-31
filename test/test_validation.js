@@ -6,7 +6,7 @@ var assert = require("assert"),
     vsprintf = sprintfjs.vsprintf
 
 function should_throw(format,args,err) {
-    assert.throws(function(){ vsprintf(format),args}, err)
+    assert.throws(function(){ vsprintf(format,args) }, err)
 }
 
 function should_not_throw(format,args) {
@@ -34,7 +34,6 @@ describe("sprintfjs", function() {
             should_throw(fmt, ["str"], TypeError)
             should_throw(fmt, [{}], TypeError)
             should_throw(fmt, ["s"], TypeError)
-            should_throw(fmt, [null], TypeError)
         })
 
         it(fmt + " should not throw TypeError for something implicitly castable to number", function() {
@@ -42,6 +41,8 @@ describe("sprintfjs", function() {
             should_not_throw(fmt, [true])
             should_not_throw(fmt, [[1]])
             should_not_throw(fmt, ["200"])
+            should_not_throw(fmt, [null])
         })
     })
+    
 })
