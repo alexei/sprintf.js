@@ -1,7 +1,7 @@
 'use strict';
 
-var assert = require("assert"),
-    sprintfjs = require("../src/sprintf.js"),
+var assert = require('assert'),
+    sprintfjs = require('../src/sprintf.js'),
     sprintf = sprintfjs.sprintf,
     vsprintf = sprintfjs.vsprintf
 
