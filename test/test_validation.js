@@ -13,6 +13,17 @@ function should_not_throw(format,args) {
     assert.doesNotThrow(function() { vsprintf(format,args) })
 }
 
+describe("sprintfjs cache", function() {
+
+    it("should not throw Error (cache consistency)", function() {
+        // redefine object properties to ensure that is not affect to the cache
+        sprintf("hasOwnProperty")
+        sprintf("constructor")
+        should_not_throw("%s", ["caching..."])
+        should_not_throw("%s", ["crash?"])
+    })
+})
+
 describe("sprintfjs", function() {
 
     it("should throw SyntaxError for placeholders", function() {
