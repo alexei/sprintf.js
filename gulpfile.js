@@ -32,8 +32,8 @@ gulp.task('test', ['lint'], function() {
 
 gulp.task('dist', ['test'], function() {
     return gulp.src([
-            'src/*.js'
-        ])
+        'src/*.js'
+    ])
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))

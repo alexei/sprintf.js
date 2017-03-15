@@ -59,7 +59,7 @@
                 }
 
                 if (re.numeric_arg.test(match[8]) && (get_type(arg) != 'number' && isNaN(arg))) {
-                    throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
+                    throw new TypeError(sprintf('[sprintf] expecting number but found %s', get_type(arg)))
                 }
 
                 if (re.number.test(match[8])) {
@@ -67,55 +67,55 @@
                 }
 
                 switch (match[8]) {
-                    case 'b':
-                        arg = parseInt(arg, 10).toString(2)
+                case 'b':
+                    arg = parseInt(arg, 10).toString(2)
                     break
-                    case 'c':
-                        arg = String.fromCharCode(parseInt(arg, 10))
+                case 'c':
+                    arg = String.fromCharCode(parseInt(arg, 10))
                     break
-                    case 'd':
-                    case 'i':
-                        arg = parseInt(arg, 10)
+                case 'd':
+                case 'i':
+                    arg = parseInt(arg, 10)
                     break
-                    case 'j':
-                        arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
+                case 'j':
+                    arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
                     break
-                    case 'e':
-                        arg = match[7] ? parseFloat(arg).toExponential(match[7]) : parseFloat(arg).toExponential()
+                case 'e':
+                    arg = match[7] ? parseFloat(arg).toExponential(match[7]) : parseFloat(arg).toExponential()
                     break
-                    case 'f':
-                        arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
+                case 'f':
+                    arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
                     break
-                    case 'g':
-                        arg = match[7] ? parseFloat(arg).toPrecision(match[7]) : parseFloat(arg)
+                case 'g':
+                    arg = match[7] ? parseFloat(arg).toPrecision(match[7]) : parseFloat(arg)
                     break
-                    case 'o':
-                        arg = arg.toString(8)
+                case 'o':
+                    arg = arg.toString(8)
                     break
-                    case 's':
-                        arg = String(arg)
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                case 's':
+                    arg = String(arg)
+                    arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
-                    case 't':
-                        arg = String(!!arg)
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                case 't':
+                    arg = String(!!arg)
+                    arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
-                    case 'T':
-                        arg = get_type(arg)
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                case 'T':
+                    arg = get_type(arg)
+                    arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
-                    case 'u':
-                        arg = parseInt(arg, 10) >>> 0
+                case 'u':
+                    arg = parseInt(arg, 10) >>> 0
                     break
-                    case 'v':
-                        arg = arg.valueOf()
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
+                case 'v':
+                    arg = arg.valueOf()
+                    arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
-                    case 'x':
-                        arg = parseInt(arg, 10).toString(16)
+                case 'x':
+                    arg = parseInt(arg, 10).toString(16)
                     break
-                    case 'X':
-                        arg = parseInt(arg, 10).toString(16).toUpperCase()
+                case 'X':
+                    arg = parseInt(arg, 10).toString(16).toUpperCase()
                     break
                 }
                 if (re.json.test(match[8])) {
@@ -164,12 +164,12 @@
                                 field_list[field_list.length] = field_match[1]
                             }
                             else {
-                                throw new SyntaxError("[sprintf] failed to parse named argument key")
+                                throw new SyntaxError('[sprintf] failed to parse named argument key')
                             }
                         }
                     }
                     else {
-                        throw new SyntaxError("[sprintf] failed to parse named argument key")
+                        throw new SyntaxError('[sprintf] failed to parse named argument key')
                     }
                     match[2] = field_list
                 }
@@ -177,12 +177,12 @@
                     arg_names |= 2
                 }
                 if (arg_names === 3) {
-                    throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported")
+                    throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
                 }
                 parse_tree[parse_tree.length] = match
             }
             else {
-                throw new SyntaxError("[sprintf] unexpected placeholder")
+                throw new SyntaxError('[sprintf] unexpected placeholder')
             }
             _fmt = _fmt.substring(match[0].length)
         }
@@ -211,9 +211,9 @@
     }
 
     var preformattedPadding = {
-        '0': ['', '0', '00', '000', '0000', '00000', '000000', '0000000'],
+        0: ['', '0', '00', '000', '0000', '00000', '000000', '0000000'],
         ' ': ['', ' ', '  ', '   ', '    ', '     ', '      ', '       '],
-        '_': ['', '_', '__', '___', '____', '_____', '______', '_______'],
+        _: ['', '_', '__', '___', '____', '_____', '______', '_______'],
     }
     function str_repeat(input, multiplier) {
         if (multiplier >= 0 && multiplier <= 7 && preformattedPadding[input]) {
