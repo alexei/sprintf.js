@@ -5,7 +5,10 @@
   "author": "Alexandru Marasteanu <hello@alexei.ro>",
   "main": "src/sprintf.js",
   "scripts": {
-    "test": "mocha test/test.js"
+    "test": "mocha test/test.js",
+    "posttest": "npm run lint",   
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -15,6 +18,7 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "benchmark": "^2.1.0",
+    "eslint": "3.17.1",
     "gulp": "^3.9.0",
     "gulp-benchmark": "^1.1.1",
     "gulp-header": "^1.7.1",
@@ -23,7 +27,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
-    "jshint": "^2.9.1",
     "mocha": "^2.4.5"
   }
 }
