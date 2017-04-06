@@ -14,7 +14,7 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])?/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -150,7 +150,7 @@
             else if ((match = re.modulo.exec(_fmt)) !== null) {
                 parse_tree[parse_tree.length] = '%'
             }
-            else if ((match = re.placeholder.exec(_fmt)) !== null) {
+            else if ((match = re.placeholder.exec(_fmt)) !== null && match[0] !== '%') {
                 if (match[2]) {
                     arg_names |= 1
                     var field_list = [], replacement_field = match[2], field_match = []
@@ -178,6 +178,9 @@
                 }
                 if (arg_names === 3) {
                     throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported")
+                }
+                if (typeof match[8] === 'undefined') {
+                    match[8] = 's';
                 }
                 parse_tree[parse_tree.length] = match
             }

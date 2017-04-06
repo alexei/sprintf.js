@@ -28,7 +28,6 @@ describe("sprintfjs", function() {
         assert.equal("ff", sprintf("%x", 255))
         assert.equal("FF", sprintf("%X", 255))
         assert.equal("Polly wants a cracker", sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants"))
-        assert.equal("Hello world!", sprintf("Hello %(who)s!", {"who": "world"}))
         assert.equal("true", sprintf("%t", true))
         assert.equal("t", sprintf("%.1t", true))
         assert.equal("true", sprintf("%t", "true"))
@@ -54,6 +53,13 @@ describe("sprintfjs", function() {
         assert.equal('1,2,3', sprintf('%v', [1, 2, 3]))
         assert.equal('[object Object]', sprintf('%v', {foo: 'bar'}))
         assert.equal('/<("[^"]*"|\'[^\']*\'|[^\'">])*>/', sprintf('%v', /<("[^"]*"|'[^']*'|[^'">])*>/))
+    })
+
+    it("should return formated strings for named placeholders", function() {
+        assert.equal("Hello world!", sprintf("Hello %(who)s!", {"who": "world"}))
+        assert.equal("Hello world !", sprintf("Hello %(who) !", {"who": "world"}))
+        assert.equal("Hello world!", sprintf("Hello %(who)!", {"who": "world"}))
+        assert.equal("Hello world !", sprintf("Hello %(who)s !", {"who": "world"}))
     })
 
     it("should return formated strings for complex placeholders", function() {
