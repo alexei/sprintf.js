@@ -87,7 +87,7 @@
                         arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
                     break
                     case 'g':
-                        arg = match[7] ? parseFloat(arg).toPrecision(match[7]) : parseFloat(arg)
+                        arg = match[7] ? String(Number(arg.toPrecision(match[7]))) : parseFloat(arg)
                     break
                     case 'o':
                         arg = arg.toString(8)
