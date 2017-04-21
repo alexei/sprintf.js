@@ -14,7 +14,7 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijosStTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -93,6 +93,7 @@
                         arg = arg.toString(8)
                     break
                     case 's':
+                    case 'S':
                         arg = String(arg)
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
