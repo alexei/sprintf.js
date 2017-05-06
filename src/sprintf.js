@@ -23,7 +23,7 @@
 
     function sprintf() {
         var key = arguments[0], cache = sprintf.cache
-        if (!(cache[key] && cache.hasOwnProperty(key))) {
+        if (!(cache[key])) {
             cache[key] = sprintf.parse(key)
         }
         return sprintf.format.call(null, cache[key], arguments)
@@ -139,7 +139,7 @@
         return output.join('')
     }
 
-    sprintf.cache = {}
+    sprintf.cache = Object.create(null)
 
     sprintf.parse = function(fmt) {
         var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
