@@ -6,7 +6,7 @@ var pkg         = require('./package.json'),
     rename      = require('gulp-rename'),
     sourcemaps  = require('gulp-sourcemaps'),
     header      = require('gulp-header'),
-    jshint      = require('gulp-jshint'),
+    eslint      = require('gulp-eslint'),
     mocha       = require('gulp-mocha'),
     benchmark   = require('gulp-benchmark'),
     banner      = '/*! <%= pkg.name %> v<%= pkg.version %> | Copyright (c) 2007-present, <%= pkg.author %> | <%= pkg.license %> */\n'
@@ -20,8 +20,8 @@ gulp.task('benchmark', function () {
 gulp.task('lint', function() {
     return gulp
         .src('src/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
+        .pipe(eslint())
+        .pipe(eslint.format())
 })
 
 gulp.task('test', ['lint'], function() {
