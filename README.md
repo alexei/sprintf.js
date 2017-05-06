@@ -1,4 +1,7 @@
-# sprintf.js [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
+# sprintf.js [![Build Status][travisci-image]][travisci-url] [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
+
+[travisci-image]: https://travis-ci.org/alexei/sprintf.js.svg?branch=master
+[travisci-url]: https://travis-ci.org/alexei/sprintf.js
 
 [npm-image]: https://badge.fury.io/js/sprintf-js.svg
 [npm-url]: https://badge.fury.io/js/sprintf-js
