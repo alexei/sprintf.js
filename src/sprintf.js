@@ -226,18 +226,18 @@
      * export to either browser or node.js
      */
     if (typeof exports !== 'undefined') {
-        exports.sprintf = sprintf
-        exports.vsprintf = vsprintf
+        exports['sprintf'] = sprintf
+        exports['vsprintf'] = vsprintf
     }
     if (typeof window !== 'undefined') {
-        window.sprintf = sprintf
-        window.vsprintf = vsprintf
+        window['sprintf'] = sprintf
+        window['vsprintf'] = vsprintf
 
-        if (typeof define === 'function' && define.amd) {
+        if (typeof define === 'function' && define['amd']) {
             define(function() {
                 return {
-                    sprintf: sprintf,
-                    vsprintf: vsprintf
+                    'sprintf': sprintf,
+                    'vsprintf': vsprintf
                 }
             })
         }
