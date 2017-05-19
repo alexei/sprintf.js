@@ -106,4 +106,9 @@ describe("sprintfjs", function() {
         assert.equal("foobar", sprintf("%s", function() { return "foobar" }))
         assert.equal(Date.now(), sprintf("%s", Date.now)) // should pass...
     })
+
+    it("should support custom number formatting", function(){
+        sprintf.formatNumber = function(val) { return val.toString() + ".00"; };
+        assert.equal("123.00", sprintf("%d", 123));
+    })
 })

@@ -29,6 +29,10 @@
         return sprintf.format.call(null, cache[key], arguments)
     }
 
+    sprintf.formatNumber = function(val) {
+        return val.toString()
+    }
+
     sprintf.format = function(parse_tree, argv) {
         var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive = true, sign = ''
         for (i = 0; i < tree_length; i++) {
@@ -122,12 +126,13 @@
                     output[output.length] = arg
                 }
                 else {
-                    if (re.number.test(match[8]) && (!is_positive || match[3])) {
-                        sign = is_positive ? '+' : '-'
-                        arg = arg.toString().replace(re.sign, '')
-                    }
-                    else {
-                        sign = ''
+                    sign = ''
+                    if (re.number.test(match[8])) {
+                        arg = sprintf.formatNumber(arg)
+                        if (!is_positive || match[3]) {
+                            sign = is_positive ? '+' : '-'
+                            arg = arg.replace(re.sign, '')
+                        }
                     }
                     pad_character = match[4] ? match[4] === '0' ? '0' : match[4].charAt(1) : ' '
                     pad_length = match[6] - (sign + arg).length
