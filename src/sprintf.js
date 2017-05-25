@@ -131,7 +131,7 @@
                     }
                     pad_character = match[4] ? match[4] === '0' ? '0' : match[4].charAt(1) : ' '
                     pad_length = match[6] - (sign + arg).length
-                    pad = match[6] ? (pad_length > 0 ? str_repeat(pad_character, pad_length) : '') : ''
+                    pad = match[6] ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
                     output[output.length] = match[5] ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
                 }
             }
@@ -208,18 +208,6 @@
         else {
             return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
         }
-    }
-
-    var preformattedPadding = {
-        '0': ['', '0', '00', '000', '0000', '00000', '000000', '0000000'],
-        ' ': ['', ' ', '  ', '   ', '    ', '     ', '      ', '       '],
-        '_': ['', '_', '__', '___', '____', '_____', '______', '_______'],
-    }
-    function str_repeat(input, multiplier) {
-        if (multiplier >= 0 && multiplier <= 7 && preformattedPadding[input]) {
-            return preformattedPadding[input][multiplier]
-        }
-        return Array(multiplier + 1).join(input)
     }
 
     /**
