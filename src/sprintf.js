@@ -30,7 +30,7 @@
     }
 
     sprintf.format = function(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive = true, sign = ''
+        var cursor = 1, tree_length = parse_tree.length, arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive, sign
         for (i = 0; i < tree_length; i++) {
             if (typeof parse_tree[i] === 'string') {
                 output[output.length] = parse_tree[i]
@@ -141,7 +141,7 @@
     sprintf.cache = Object.create(null)
 
     sprintf.parse = function(fmt) {
-        var _fmt = fmt, match = [], parse_tree = [], arg_names = 0
+        var _fmt = fmt, match, parse_tree = [], arg_names = 0
         while (_fmt) {
             if ((match = re.text.exec(_fmt)) !== null) {
                 parse_tree[parse_tree.length] = match[0]
