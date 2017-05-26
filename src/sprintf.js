@@ -21,8 +21,8 @@
         sign: /^[\+\-]/
     }
 
-    function sprintf() {
-        var key = arguments[0], cache = sprintf.cache
+    function sprintf(key) {
+        var cache = sprintf.cache
         if (!(cache[key])) {
             cache[key] = sprintf.parse(key)
         }
