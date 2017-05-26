@@ -30,13 +30,12 @@
     }
 
     sprintf.format = function(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive = true, sign = ''
+        var cursor = 1, tree_length = parse_tree.length, arg, output = [], i, k, match, pad, pad_character, pad_length, is_positive = true, sign = ''
         for (i = 0; i < tree_length; i++) {
-            node_type = get_type(parse_tree[i])
-            if (node_type === 'string') {
+            if (typeof parse_tree[i] === 'string') {
                 output[output.length] = parse_tree[i]
             }
-            else if (node_type === 'array') {
+            else if (parse_tree[i] instanceof Array) {
                 match = parse_tree[i] // convenience purposes only
                 if (match[2]) { // keyword argument
                     arg = argv[cursor]
@@ -54,12 +53,12 @@
                     arg = argv[cursor++]
                 }
 
-                if (re.not_type.test(match[8]) && re.not_primitive.test(match[8]) && get_type(arg) == 'function') {
+                if (re.not_type.test(match[8]) && re.not_primitive.test(match[8]) && arg instanceof Function) {
                     arg = arg()
                 }
 
-                if (re.numeric_arg.test(match[8]) && (get_type(arg) != 'number' && isNaN(arg))) {
-                    throw new TypeError(sprintf("[sprintf] expecting number but found %s", get_type(arg)))
+                if (re.numeric_arg.test(match[8]) && (typeof arg !== 'number' && isNaN(arg))) {
+                    throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg))
                 }
 
                 if (re.number.test(match[8])) {
@@ -101,7 +100,7 @@
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 'T':
-                        arg = get_type(arg)
+                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase()
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 'u':
@@ -193,21 +192,6 @@
         _argv = (argv || []).slice(0)
         _argv.splice(0, 0, fmt)
         return sprintf.apply(null, _argv)
-    }
-
-    /**
-     * helpers
-     */
-    function get_type(variable) {
-        if (typeof variable === 'number') {
-            return 'number'
-        }
-        else if (typeof variable === 'string') {
-            return 'string'
-        }
-        else {
-            return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase()
-        }
     }
 
     /**
