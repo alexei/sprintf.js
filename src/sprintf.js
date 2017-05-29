@@ -87,10 +87,10 @@
                         arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
                     break
                     case 'g':
-                        arg = match[7] ? parseFloat(arg).toPrecision(match[7]) : parseFloat(arg)
+                        arg = match[7] ? String(Number(arg.toPrecision(match[7]))) : parseFloat(arg)
                     break
                     case 'o':
-                        arg = arg.toString(8)
+                        arg = (parseInt(arg, 10) >>> 0).toString(8)
                     break
                     case 's':
                         arg = String(arg)
@@ -112,10 +112,10 @@
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
                     break
                     case 'x':
-                        arg = parseInt(arg, 10).toString(16)
+                        arg = (parseInt(arg, 10) >>> 0).toString(16)
                     break
                     case 'X':
-                        arg = parseInt(arg, 10).toString(16).toUpperCase()
+                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
                     break
                 }
                 if (re.json.test(match[8])) {
