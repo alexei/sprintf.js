@@ -6,7 +6,7 @@
   "main": "src/sprintf.js",
   "scripts": {
     "test": "mocha test/test.js",
-    "posttest": "npm run lint",   
+    "posttest": "npm run lint",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -21,13 +21,12 @@
     "eslint": "3.17.1",
     "gulp": "^3.9.1",
     "gulp-benchmark": "^1.1.1",
+    "gulp-eslint": "^3.0.1",
     "gulp-header": "^1.8.8",
-    "gulp-jshint": "^2.0.4",
     "gulp-mocha": "^4.3.1",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.1.2",
-    "jshint": "^2.9.4",
     "mocha": "^3.3.0"
   }
 }
