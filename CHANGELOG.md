@@ -3,3 +3,4 @@
 * This CHANGELOG
 * Various optimizations for modern browsers
 * Fixes %g, %o, %x and %X specifiers
+* Use ESLint instead of JSHint
