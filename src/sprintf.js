@@ -36,7 +36,7 @@
             if (typeof parse_tree[i] === 'string') {
                 output += parse_tree[i]
             }
-            else if (parse_tree[i] instanceof Array) {
+            else if (Array.isArray(parse_tree[i])) {
                 match = parse_tree[i] // convenience purposes only
                 if (match[2]) { // keyword argument
                     arg = argv[cursor]
