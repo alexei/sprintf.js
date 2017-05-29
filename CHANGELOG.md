@@ -1,4 +1,4 @@
-## 1.1.1 (NOT YET RELEASED)
+## 1.1.1 (2017-05-29)
 
 * This CHANGELOG
 * Various optimizations for modern browsers
