@@ -1,6 +1,6 @@
 /* global window, exports, define */
 
-(function() {
+!function() {
     'use strict'
 
     var re = {
@@ -69,54 +69,54 @@
                 switch (match[8]) {
                     case 'b':
                         arg = parseInt(arg, 10).toString(2)
-                    break
+                        break
                     case 'c':
                         arg = String.fromCharCode(parseInt(arg, 10))
-                    break
+                        break
                     case 'd':
                     case 'i':
                         arg = parseInt(arg, 10)
-                    break
+                        break
                     case 'j':
                         arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
-                    break
+                        break
                     case 'e':
                         arg = match[7] ? parseFloat(arg).toExponential(match[7]) : parseFloat(arg).toExponential()
-                    break
+                        break
                     case 'f':
                         arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
-                    break
+                        break
                     case 'g':
                         arg = match[7] ? String(Number(arg.toPrecision(match[7]))) : parseFloat(arg)
-                    break
+                        break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
-                    break
+                        break
                     case 's':
                         arg = String(arg)
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                    break
+                        break
                     case 't':
                         arg = String(!!arg)
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                    break
+                        break
                     case 'T':
                         arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase()
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                    break
+                        break
                     case 'u':
                         arg = parseInt(arg, 10) >>> 0
-                    break
+                        break
                     case 'v':
                         arg = arg.valueOf()
                         arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                    break
+                        break
                     case 'x':
                         arg = (parseInt(arg, 10) >>> 0).toString(16)
-                    break
+                        break
                     case 'X':
                         arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
-                    break
+                        break
                 }
                 if (re.json.test(match[8])) {
                     output += arg
@@ -196,6 +196,7 @@
     /**
      * export to either browser or node.js
      */
+    /* eslint-disable quote-props */
     if (typeof exports !== 'undefined') {
         exports['sprintf'] = sprintf
         exports['vsprintf'] = vsprintf
@@ -213,4 +214,5 @@
             })
         }
     }
-})();
+    /* eslint-enable quote-props */
+}()

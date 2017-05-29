@@ -1,6 +1,6 @@
 /* global describe, it */
 
-'use strict';
+'use strict'
 
 var assert = require('assert'),
     sprintfjs = require('../src/sprintf.js'),

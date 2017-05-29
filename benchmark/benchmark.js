@@ -1,8 +1,7 @@
 var Benchmark   = require('benchmark'),
     suite       = new Benchmark.Suite,
     sprintfjs   = require('../src/sprintf.js'),
-    sprintf     = sprintfjs.sprintf,
-    vsprintf    = sprintfjs.vsprintf
+    sprintf     = sprintfjs.sprintf
 
 suite
     .add('%8d', function() {

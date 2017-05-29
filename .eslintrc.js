@@ -5,11 +5,13 @@ module.exports = {
         es6: true
     },
     rules: {
-        'no-control-regex': 0,
-        'no-undef': 0,
-        'no-unused-vars': 0,
+        indent: ['error', 4, {SwitchCase: 1}],
+        'quote-props': ['error', 'as-needed'],
+        'no-cond-assign': 0,
         'no-console': 0,
-        indent: ['error', 4],
-        'quote-props': ['error', 'as-needed']
+        'no-control-regex': 0,
+        'no-undef': 'error',
+        'no-unused-vars': 'error',
+        semi: ['error', 'never']
     }
-};
+}

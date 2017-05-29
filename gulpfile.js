@@ -15,7 +15,7 @@ gulp.task('benchmark', function () {
     return gulp
         .src('benchmark/*.js', {read: false})
         .pipe(benchmark())
-});
+})
 
 gulp.task('lint', function() {
     return gulp
@@ -27,7 +27,7 @@ gulp.task('lint', function() {
 gulp.task('test', ['lint'], function() {
     return gulp
         .src('test/*.js', {read: false})
-        .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha({reporter: 'nyan'}))
 })
 
 gulp.task('dist', ['test'], function() {

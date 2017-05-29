@@ -1,11 +1,10 @@
 /* global describe, it */
 
-'use strict';
+'use strict'
 
 var assert = require('assert'),
     sprintfjs = require('../src/sprintf.js'),
-    sprintf = sprintfjs.sprintf,
-    vsprintf = sprintfjs.vsprintf
+    sprintf = sprintfjs.sprintf
 
 describe('sprintfjs', function() {
     var pi = 3.141592653589793
@@ -33,7 +32,7 @@ describe('sprintfjs', function() {
         assert.equal('FF', sprintf('%X', 255))
         assert.equal('FFFFFF01', sprintf('%X', -255))
         assert.equal('Polly wants a cracker', sprintf('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants'))
-        assert.equal('Hello world!', sprintf('Hello %(who)s!', {'who': 'world'}))
+        assert.equal('Hello world!', sprintf('Hello %(who)s!', {who: 'world'}))
         assert.equal('true', sprintf('%t', true))
         assert.equal('t', sprintf('%.1t', true))
         assert.equal('true', sprintf('%t', 'true'))
