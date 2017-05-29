@@ -59,7 +59,7 @@
                 }
 
                 if (re.numeric_arg.test(match[8]) && (typeof arg !== 'number' && isNaN(arg))) {
-                    throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg))
+                    throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg))
                 }
 
                 if (re.number.test(match[8])) {
@@ -168,12 +168,12 @@
                                 field_list.push(field_match[1])
                             }
                             else {
-                                throw new SyntaxError("[sprintf] failed to parse named argument key")
+                                throw new SyntaxError('[sprintf] failed to parse named argument key')
                             }
                         }
                     }
                     else {
-                        throw new SyntaxError("[sprintf] failed to parse named argument key")
+                        throw new SyntaxError('[sprintf] failed to parse named argument key')
                     }
                     match[2] = field_list
                 }
@@ -181,12 +181,12 @@
                     arg_names |= 2
                 }
                 if (arg_names === 3) {
-                    throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported")
+                    throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
                 }
                 parse_tree.push(match)
             }
             else {
-                throw new SyntaxError("[sprintf] unexpected placeholder")
+                throw new SyntaxError('[sprintf] unexpected placeholder')
             }
             _fmt = _fmt.substring(match[0].length)
         }
