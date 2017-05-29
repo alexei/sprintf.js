@@ -1,4 +1,4 @@
-/* globals angular, sprintf, vsprintf */
+/* global angular, sprintf, vsprintf */
 
 (function () {
     'use strict'

@@ -1,6 +1,6 @@
-/* globals window, exports, define */
+/* global window, exports, define */
 
-(function(window) {
+(function() {
     'use strict'
 
     var re = {
@@ -213,4 +213,4 @@
             })
         }
     }
-})(this);
+})();
