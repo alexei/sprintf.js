@@ -1,4 +1,4 @@
-# sprintf.js
+# sprintf-js
 
 [![Build Status][travisci-image]][travisci-url] [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
 
@@ -14,9 +14,9 @@
 [dev-dependencies-image]: https://david-dm.org/alexei/sprintf.js/dev-status.svg
 [dev-dependencies-url]: https://david-dm.org/alexei/sprintf.js#info=devDependencies
 
-**sprintf.js** is a complete open source JavaScript sprintf implementation for the *browser* and *Node.js*.
+**sprintf-js** is a complete open source JavaScript `sprintf` implementation for the **browser** and **Node.js**.
 
-**Note: as of v.1.1.1 you might need some polyfills for older environments. See [support](#support) below.**
+**Note: as of v1.1.1 you might need some polyfills for older environments. See [Support](#support) section below.**
 
 ## Usage
 
@@ -46,7 +46,7 @@ Returns a formatted string:
 
 ### `vsprintf`
 
-Same as `sprintf` except it takes an array of arguments, rather than a variable number of arguments.
+Same as `sprintf` except it takes an array of arguments, rather than a variable number of arguments:
 
     string vsprintf(string format, array arguments?)
 
@@ -57,7 +57,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
 * An optional number followed by a `$` sign that selects which argument index to use for the value. If not specified, arguments will be placed in the same order as the placeholders in the input string.
 * An optional `+` sign that forces to preceed the result with a plus or minus sign on numeric values. By default, only the `-` sign is used on negative numbers.
 * An optional padding specifier that says what character to use for padding (if specified). Possible values are `0` or any other character precedeed by a `'` (single quote). The default is to pad with *spaces*.
-* An optional `-` sign, that causes sprintf to left-align the result of this placeholder. The default is to right-align the result.
+* An optional `-` sign, that causes `sprintf` to left-align the result of this placeholder. The default is to right-align the result.
 * An optional number, that says how many characters the result should have. If the value to be returned is shorter than this number, the result will be padded. When used with the `j` (JSON) type specifier, the padding length specifies the tab size used for indentation.
 * An optional precision modifier, consisting of a `.` (dot) followed by a number, that says how many digits should be displayed for floating point numbers. When used with the `g` type specifier, it specifies the number of significant digits. When used on a string, it causes the result to be truncated.
 * A type specifier that can be any of:
@@ -122,11 +122,11 @@ You can use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respectiv
 
 ### Node.js
 
-Currently `sprintf` runs in all active Node versions (4.x+).
+`sprintf-js` runs in all active Node versions (4.x+).
 
 ### Browser
 
-`sprintf` should work in all modern browsers. As of v1.1.1, you might need polyfills for the following:
+`sprintf-js` should work in all modern browsers. As of v1.1.1, you might need polyfills for the following:
 
  - `String.prototype.repeat()` (any IE)
  - `Array.isArray()` (IE < 9)
@@ -136,7 +136,7 @@ YMMV
 
 ## License
 
-**sprintf.js** is licensed under the terms of the 3-clause BSD license.
+**sprintf-js** is licensed under the terms of the 3-clause BSD license.
 
 ## Notes
 
