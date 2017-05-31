@@ -1,4 +1,6 @@
-# sprintf.js [![Build Status][travisci-image]][travisci-url] [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
+# sprintf.js
+
+[![Build Status][travisci-image]][travisci-url] [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
 
 [travisci-image]: https://travis-ci.org/alexei/sprintf.js.svg?branch=master
 [travisci-url]: https://travis-ci.org/alexei/sprintf.js
@@ -12,11 +14,43 @@
 [dev-dependencies-image]: https://david-dm.org/alexei/sprintf.js/dev-status.svg
 [dev-dependencies-url]: https://david-dm.org/alexei/sprintf.js#info=devDependencies
 
-**sprintf.js** is a complete open source JavaScript sprintf implementation for the *browser* and *node.js*.
+**sprintf.js** is a complete open source JavaScript sprintf implementation for the *browser* and *Node.js*.
 
-Its prototype is simple:
+**Note: as of v.1.1.1 you might need some polyfills for older environments. See [support](#support) below.**
 
-    string sprintf(string format , [mixed arg1 [, mixed arg2 [ ,...]]])
+## Usage
+
+    var sprintf = require('sprintf-js').sprintf,
+        vsprintf = require('sprintf-js').vsprintf
+
+    sprintf('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants')
+    vsprintf('The first 4 letters of the english alphabet are: %s, %s, %s and %s', ['a', 'b', 'c', 'd'])
+
+## Installation
+
+### NPM
+
+    npm install sprintf-js
+
+### Bower
+
+    bower install sprintf
+
+## API
+
+### `sprintf`
+
+Returns a formatted string:
+
+    string sprintf(string format, mixed arg1?, mixed arg2?, ...)
+
+### `vsprintf`
+
+Same as `sprintf` except it takes an array of arguments, rather than a variable number of arguments.
+
+    string vsprintf(string format, array arguments?)
+
+## Format specification
 
 The placeholders in the format string are marked by `%` and are followed by one or more of these elements, in this order:
 
@@ -44,66 +78,66 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `X` — yields an integer as a hexadecimal number (upper-case)
     * `j` — yields a JavaScript object or array as a JSON encoded string
 
+## Features
 
-## JavaScript `vsprintf`
-`vsprintf` is the same as `sprintf` except that it accepts an array of arguments, rather than a variable number of arguments:
+### Argument swapping
 
-    vsprintf("The first 4 letters of the english alphabet are: %s, %s, %s and %s", ["a", "b", "c", "d"])
-
-## Argument swapping
 You can also swap the arguments. That is, the order of the placeholders doesn't have to match the order of the arguments. You can do that by simply indicating in the format string which arguments the placeholders refer to:
 
-    sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants")
+    sprintf('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants')
+
 And, of course, you can repeat the placeholders without having to increase the number of arguments.
 
-## Named arguments
+### Named arguments
+
 Format strings may contain replacement fields rather than positional placeholders. Instead of referring to a certain argument, you can now refer to a certain key within an object. Replacement fields are surrounded by rounded parentheses - `(` and `)` - and begin with a keyword that refers to a key:
 
     var user = {
-        name: "Dolly"
+        name: 'Dolly',
     }
-    sprintf("Hello %(name)s", user) // Hello Dolly
+    sprintf('Hello %(name)s', user) // Hello Dolly
+
 Keywords in replacement fields can be optionally followed by any number of keywords or indexes:
 
     var users = [
-        {name: "Dolly"},
-        {name: "Molly"},
-        {name: "Polly"}
+        {name: 'Dolly'},
+        {name: 'Molly'},
+        {name: 'Polly'},
     ]
-    sprintf("Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s", {users: users}) // Hello Dolly, Molly and Polly
+    sprintf('Hello %(users[0].name)s, %(users[1].name)s and %(users[2].name)s', {users: users}) // Hello Dolly, Molly and Polly
+
 Note: mixing positional and named placeholders is not (yet) supported
 
-## Computed values
-You can pass in a function as a dynamic value and it will be invoked (with no arguments) in order to compute the value on-the-fly.
+### Computed values
 
-    sprintf("Current timestamp: %d", Date.now) // Current timestamp: 1398005382890
-    sprintf("Current date and time: %s", function() { return new Date().toString() })
+You can pass in a function as a dynamic value and it will be invoked (with no arguments) in order to compute the value on the fly.
 
-# AngularJS
-You can now use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respectively) in your AngularJS projects. See `demo/`.
+    sprintf('Current date and time: %s', function() { return new Date().toString() })
 
-# Installation
+### AngularJS
 
-## Via Bower
+You can use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respectively) in your AngularJS projects. See `demo/`.
 
-    bower install sprintf
+## Support
 
-## Or as a node.js module
+### Node.js
 
-    npm install sprintf-js
+Currently `sprintf` runs in all active Node versions (4.x+).
 
-### Usage
+### Browser
 
-    var sprintf = require("sprintf-js").sprintf,
-        vsprintf = require("sprintf-js").vsprintf
+`sprintf` should work in all modern browsers. As of v1.1.1, you might need polyfills for the following:
 
-    sprintf("%2$s %3$s a %1$s", "cracker", "Polly", "wants")
-    vsprintf("The first 4 letters of the english alphabet are: %s, %s, %s and %s", ["a", "b", "c", "d"])
+ - `String.prototype.repeat()` (any IE)
+ - `Array.isArray()` (IE < 9)
+ - `Object.create()` (IE < 9)
 
-# License
+YMMV
+
+## License
 
 **sprintf.js** is licensed under the terms of the 3-clause BSD license.
 
-# Notes
+## Notes
 
 <small><sup><a href="#fn-ref-1" name="fn-1">1</a></sup> `sprintf` doesn't use the `typeof` operator. As such, the value `null` is a `null`, an array is an `array` (not an `object`), a date value is a `date` etc.</small>
