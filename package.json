@@ -5,7 +5,7 @@
   "author": "Alexandru Mărășteanu <hello@alexei.ro>",
   "main": "src/sprintf.js",
   "scripts": {
-    "test": "mocha test/test.js",
+    "test": "mocha test/*.js",
     "posttest": "npm run lint",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
