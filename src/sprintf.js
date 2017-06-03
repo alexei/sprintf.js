@@ -65,6 +65,10 @@
                 if (re.number.test(match[8])) {
                     is_positive = arg >= 0
                 }
+                
+                if (typeof arg === "undefined") {
+                    arg = ""
+                }
 
                 switch (match[8]) {
                     case 'b':
