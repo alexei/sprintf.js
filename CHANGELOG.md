@@ -2,6 +2,7 @@
 
 * Update Travis config to test on all supported Node versions (i.e. 4+)
 * Reorganize README; add instructions re polyfills
+* Refactor the code
 
 ## 1.1.1 (2017-05-29)
 
