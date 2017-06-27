@@ -23,10 +23,10 @@
 
     function sprintf(key) {
         var leakGuard = new Array(arguments.length-1);
-        for (var i=1; i<leakGuard.length; ++i) {
-            leakGuard[i] = arguments[i];
+        for (var i=0; i<leakGuard.length; ++i) {
+            leakGuard[i] = arguments[i+1];
         }
-        return sprintf_format(sprintf_parse(key), leakGuard);
+        return vsprintf(key, leakGuard);
     }
 
     function vsprintf(fmt, argv) {
