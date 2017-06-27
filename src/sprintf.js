@@ -22,15 +22,15 @@
     }
 
     function sprintf(key) {
-        var leakGuard = new Array(arguments.length-1);
+        var leakGuard = new Array(arguments.length-1)
         for (var i=0; i<leakGuard.length; ++i) {
-            leakGuard[i] = arguments[i+1];
+            leakGuard[i] = arguments[i+1]
         }
-        return vsprintf(key, leakGuard);
+        return vsprintf(key, leakGuard)
     }
 
     function vsprintf(fmt, argv) {
-        return sprintf_format(sprintf_parse(fmt), argv || []);
+        return sprintf_format(sprintf_parse(fmt), argv || [])
     }
 
     function sprintf_format(parse_tree, argv) {
