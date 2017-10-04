@@ -14,11 +14,15 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxXC])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
         sign: /^[\+\-]/
+    }
+
+    function classOf(o) {
+        return Object.prototype.toString.call(o).replace(/\[object (.*?)\]/, '$1')
     }
 
     function sprintf(key) {
@@ -54,7 +58,7 @@
                     arg = argv[cursor++]
                 }
 
-                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
+                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function && ph.type !== 'C') {
                     arg = arg()
                 }
 
@@ -72,6 +76,9 @@
                         break
                     case 'c':
                         arg = String.fromCharCode(parseInt(arg, 10))
+                        break
+                    case 'C':
+                        arg = classOf(arg)
                         break
                     case 'd':
                     case 'i':

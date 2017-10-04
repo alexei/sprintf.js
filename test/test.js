@@ -109,4 +109,54 @@ describe('sprintfjs', function() {
     it('should return formated strings for callbacks', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
     })
+
+    it('should work with Object.prototype.toString.call', function() {
+        var supportsSymbols = typeof Symbol !== 'undefined'
+        var supportsToStringTag = supportsSymbols && Symbol.toStringTag
+        var supportsDefineProperty = typeof Object.defineProperty !== 'undefined'
+        var trifecta = supportsDefineProperty && supportsSymbols && supportsToStringTag
+        var sampleType = "FunType"
+        var o = {}
+
+        assert.equal('Null', sprintf('%C', null))
+        assert.equal('Undefined', sprintf('%C', undefined))
+        assert.equal(Array.name, sprintf('%C', []))
+        assert.equal(Boolean.name, sprintf('%C', true))
+        assert.equal(Number.name, sprintf('%C', 34))
+        assert.equal(Object.name, sprintf('%C', {}))
+        assert.equal(RegExp.name, sprintf('%C', /abc/))
+        assert.equal(RegExp.name, sprintf('%C', /abc/))
+        assert.equal(String.name, sprintf('%C', ""))
+
+        if (supportsSymbols) {
+            assert.equal(Symbol.name, sprintf('%C', Symbol()))
+        }
+
+        // Note this is significantly easier to implement in modern ES6
+        // syntax and on systems where this is typically done. Even though
+        // this code is predominantly ES5 or below in format, this will
+        // achieve the same as the following ES6 code
+        //
+        // let o = { get [Symbol.toStringTag]() { return "FunType" }}
+        // assert.equal("FunType", sprintf("%C", o))
+        //
+        // Also in classes
+        //
+        // class Test {
+        //   get [Symbol.toStringTag]() { return this.constructor.name }
+        //   static get [Symbol.toStringTag]() { return this.name }
+        // }
+        //
+        // class Extension extends Test {}
+        //
+        // sprintf("%C", Test) // "Test"
+        // sprintf("%C", Extension) // "Extension"
+        //
+        if (trifecta) {
+            Object.defineProperty(o, Symbol.toStringTag, {
+                get: function() { return sampleType }
+            })
+            assert.equal(sampleType, sprintf('%C', o))
+        }
+    })
 })
