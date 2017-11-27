@@ -3,6 +3,8 @@
 !function() {
     'use strict'
 
+    var isClass = require('is-class')
+
     var re = {
         not_string: /[^s]/,
         not_bool: /[^t]/,
@@ -55,7 +57,10 @@
                 }
 
                 if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
-                    arg = arg()
+                    if (isClass(arg))
+                        arg = '[class ' + arg.prototype.constructor.name + ']'
+                    else
+                        arg = arg()
                 }
 
                 if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
@@ -93,7 +98,10 @@
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
                         break
                     case 's':
-                        arg = String(arg)
+                        if (arg instanceof Object && !(arg instanceof Function))
+                            arg = '[instance ' + Object.getPrototypeOf(arg).constructor.name + ']'
+                        else
+                            arg = String(arg)
                         arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
                         break
                     case 't':
