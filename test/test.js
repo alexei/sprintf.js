@@ -58,6 +58,10 @@ describe('sprintfjs', function() {
         assert.equal('1,2,3', sprintf('%v', [1, 2, 3]))
         assert.equal('[object Object]', sprintf('%v', {foo: 'bar'}))
         assert.equal('/<("[^"]*"|\'[^\']*\'|[^\'">])*>/', sprintf('%v', /<("[^"]*"|'[^']*'|[^'">])*>/))
+
+        class SomeClass {}
+        assert.equal('test [class SomeClass]', sprintf('test %s', SomeClass))
+        assert.equal('test [instance SomeClass]', sprintf( 'test %s', new SomeClass))
     })
 
     it('should return formated strings for complex placeholders', function() {

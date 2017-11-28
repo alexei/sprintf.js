@@ -28,5 +28,8 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "mocha": "^3.4.2"
+  },
+  "dependencies": {
+    "is-class": "0.0.4"
   }
 }
