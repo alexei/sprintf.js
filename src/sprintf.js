@@ -98,8 +98,9 @@
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
                         break
                     case 's':
-                        if (arg instanceof Object && !(arg instanceof Function))
-                            arg = '[instance ' + Object.getPrototypeOf(arg).constructor.name + ']'
+                        var ctor = Object.getPrototypeOf(arg).constructor.name
+                        if (arg instanceof Object && !(arg instanceof Function) && ctor !== 'Object')
+                            arg = '[instance ' + ctor + ']'
                         else
                             arg = String(arg)
                         arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
