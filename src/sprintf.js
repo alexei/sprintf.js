@@ -41,7 +41,7 @@
                 if (ph.keys) { // keyword argument
                     arg = argv[cursor]
                     for (k = 0; k < ph.keys.length; k++) {
-                        if (!arg.hasOwnProperty(ph.keys[k])) {
+                        if (arg[ph.keys[k]] === undefined) {
                             throw new Error(sprintf('[sprintf] property "%s" does not exist', ph.keys[k]))
                         }
                         arg = arg[ph.keys[k]]

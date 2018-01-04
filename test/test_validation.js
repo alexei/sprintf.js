@@ -58,3 +58,14 @@ describe('sprintfjs', function() {
         })
     })
 })
+
+describe('sprintfjs-prototype', function() {
+
+    function Klass() {}
+    Klass.prototype = {
+        get x() { return 2 }
+    }
+    it('Prototype properties should not cause an error', function() {
+        should_not_throw('%(x)s', new Klass())
+    })
+})
