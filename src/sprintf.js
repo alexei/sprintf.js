@@ -41,8 +41,8 @@
                 if (ph.keys) { // keyword argument
                     arg = argv[cursor]
                     for (k = 0; k < ph.keys.length; k++) {
-                        if (arg[ph.keys[k]] === undefined) {
-                            throw new Error(sprintf('[sprintf] property "%s" does not exist', ph.keys[k]))
+                        if (arg == undefined) {
+                            throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k-1]))
                         }
                         arg = arg[ph.keys[k]]
                     }

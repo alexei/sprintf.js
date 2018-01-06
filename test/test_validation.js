@@ -57,15 +57,28 @@ describe('sprintfjs', function() {
             should_not_throw(fmt, [null])
         })
     })
-})
 
-describe('sprintfjs-prototype', function() {
+    it('should not throw Error for expression which evaluates to undefined', function() {
+        should_not_throw("%(x.y)s", {x : {}})
+    })
 
-    function Klass() {}
-    Klass.prototype = {
-        get x() { return 2 }
-    }
-    it('Prototype properties should not cause an error', function() {
-        should_not_throw('%(x)s', new Klass())
+    it('should throw own Error when expression evaluation would raise TypeError', function() {
+        var fmt = "%(x.y)s"
+        try {
+            sprintf(fmt, {})
+        } catch (e) {
+            assert(e.message.indexOf('[sprintf]') !== -1)
+        }
+    })
+
+    it('should not throw when accessing properties on the prototype', function() {
+        function C() { }
+        C.prototype = {
+            get x() { return 2 },
+            set y(v) { /*Noop */}
+        }
+        var c = new C()
+        should_not_throw("%(x)s", c)
+        should_not_throw("%(y)s", c)
     })
 })
