@@ -44,7 +44,7 @@
                         if (arg == undefined) {
                             throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k-1]))
                         }
-                        arg = arg[ph.keys[k]]
+                        arg = arg[ph.keys[k]] || ph.placeholder
                     }
                 }
                 else if (ph.param_no) { // positional argument (explicit)
