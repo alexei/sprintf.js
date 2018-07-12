@@ -45,7 +45,7 @@
                             throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k-1]))
                         }
 
-                        if (arg.hasOwnProperty(ph.keys[k])) arg = arg[ph.keys[k]];
+                        if (arg.hasOwnProperty(ph.keys[k])) arg = arg[ph.keys[k]]
                         else arg = ph.placeholder
                     }
                 }
