@@ -228,4 +228,4 @@
         }
     }
     /* eslint-enable quote-props */
-}()
+}(); // eslint-disable-line
