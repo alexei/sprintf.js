@@ -6,7 +6,7 @@
   "main": "src/sprintf.js",
   "scripts": {
     "test": "mocha test/*.js",
-    "posttest": "npm run lint",
+    "pretest": "npm run lint",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
