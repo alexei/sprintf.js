@@ -3,6 +3,13 @@
 !function() {
     'use strict'
 
+    var repeat = String.prototype.repeat || function(n) {
+        var str = this
+        var result = ""
+        for (;n > 0; (n >>>= 1) && (str += str)) if (n & 1) result += str
+        return result
+    }
+
     var re = {
         not_string: /[^s]/,
         not_bool: /[^t]/,
@@ -131,7 +138,7 @@
                     }
                     pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' '
                     pad_length = ph.width - (sign + arg).length
-                    pad = ph.width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
+                    pad = ph.width ? (pad_length > 0 ? repeat.call(pad_character, pad_length) : '') : ''
                     output += ph.align ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
                 }
             }

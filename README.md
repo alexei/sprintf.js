@@ -126,9 +126,8 @@ You can use `sprintf` and `vsprintf` (also aliased as `fmt` and `vfmt` respectiv
 
 ### Browser
 
-`sprintf-js` should work in all modern browsers. As of v1.1.1, you might need polyfills for the following:
+`sprintf-js` should work in all modern browsers. As of v1.1.2, you might need polyfills for the following:
 
- - `String.prototype.repeat()` (any IE)
  - `Array.isArray()` (IE < 9)
  - `Object.create()` (IE < 9)
 
