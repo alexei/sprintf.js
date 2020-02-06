@@ -14,7 +14,7 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(-?\d+))?(?::([ULC]))?([b-gijostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -94,7 +94,10 @@
                         break
                     case 's':
                         arg = String(arg)
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        arg = (ph.precision ? ((ph.precision<0) ? arg.slice(ph.precision) : arg.slice(0, ph.precision)) : arg)
+                        if (ph.convert=='U') arg = arg.toUpperCase();
+                        else if (ph.convert=='L') arg = arg.toLowerCase();
+                        else if (ph.convert=='C') arg = arg.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); })
                         break
                     case 't':
                         arg = String(!!arg)
@@ -194,7 +197,8 @@
                         align:       match[5],
                         width:       match[6],
                         precision:   match[7],
-                        type:        match[8]
+                        convert:     match[8],
+                        type:        match[9]
                     }
                 )
             }
