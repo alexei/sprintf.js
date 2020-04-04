@@ -79,8 +79,8 @@ describe('sprintfjs', function() {
         assert.equal('3.14159', sprintf('%.6g', pi))
         assert.equal('3.14', sprintf('%.3g', pi))
         assert.equal('3', sprintf('%.1g', pi))
-        assert.equal('-000000123', sprintf('%+010d', -123))
-        assert.equal('______-123', sprintf("%+'_10d", -123))
+        assert.equal('-000000123', sprintf('%+010d', -123)) // negative padding
+        assert.equal('______-123', sprintf("%+'_10d", -123)) // negative padding
         assert.equal('-234.34 123.2', sprintf('%f %f', -234.34, 123.2))
 
         // padding
