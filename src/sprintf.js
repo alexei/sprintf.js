@@ -14,7 +14,7 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d*))?([b-gijostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -182,6 +182,10 @@
                 }
                 if (arg_names === 3) {
                     throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
+                }
+
+                if (typeof match[7] === 'string' && match[7].length === 0) {
+                    match[7] = '0';
                 }
 
                 parse_tree.push(

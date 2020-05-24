@@ -109,4 +109,16 @@ describe('sprintfjs', function() {
     it('should return formated strings for callbacks', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
     })
+
+	it('should respect precision', function() {
+		assert.equal('1.200', sprintf("%.3f", 1.2)) // input shorter then required precision - fill in
+		assert.equal('1', sprintf("%.f", 1.2))
+
+		assert.equal(sprintf("%.0f", 1.123), sprintf("%.f", 1.456)) // use 0 as precision if not given
+
+		assert.equal('1.123', sprintf("%.3f", 1.1231)) // input overflows given precision - round down
+		assert.equal('1', sprintf("%.f", 1.1231))
+		assert.equal('1.124', sprintf("%.3f", 1.1239)) // input overflows given precision - round up
+		assert.equal('2', sprintf("%.f", 1.9))
+	})
 })
