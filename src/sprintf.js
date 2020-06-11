@@ -55,7 +55,7 @@
                 }
 
                 if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
-                    arg = arg()
+                    arg = arg(ph, i, parse_tree)
                 }
 
                 if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
