@@ -4,6 +4,9 @@
   "description": "JavaScript sprintf implementation",
   "author": "Alexandru Mărășteanu <hello@alexei.ro>",
   "main": "src/sprintf.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "mocha test/*.js",
     "pretest": "npm run lint",
