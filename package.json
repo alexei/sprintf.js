@@ -10,8 +10,8 @@
   "scripts": {
     "test": "mocha test/*.js",
     "pretest": "npm run lint",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint": "eslint src test benchmark",
+    "lint:fix": "eslint --fix src test benchmark"
   },
   "repository": {
     "type": "git",
