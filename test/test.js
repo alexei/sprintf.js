@@ -109,4 +109,20 @@ describe('sprintfjs', function() {
     it('should return formated strings for callbacks', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
     })
+
+    it('should return parsed tree', function() {
+        assert.deepEqual([
+            {
+                placeholder: '%s',
+                param_no: undefined,
+                keys: undefined,
+                sign: undefined,
+                pad_char: undefined,
+                align: undefined,
+                width: undefined,
+                precision: undefined,
+                type: 's'
+            }
+        ], sprintf.parse('%s'))
+    })
 })

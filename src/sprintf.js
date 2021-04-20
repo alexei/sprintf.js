@@ -26,6 +26,13 @@
         return sprintf_format(sprintf_parse(key), arguments)
     }
 
+    Object.defineProperty(sprintf, 'parse', {
+        value: sprintf_parse,
+        configurable: true,
+        enumerable: false,
+        writable: true
+    })
+
     function vsprintf(fmt, argv) {
         return sprintf.apply(null, [fmt].concat(argv || []))
     }
