@@ -207,7 +207,7 @@
     }
 
     /**
-     * export to either browser or node.js
+     * export to either browser, node.js or JavaScriptCore
      */
     /* eslint-disable quote-props */
     if (typeof exports !== 'undefined') {
@@ -227,5 +227,11 @@
             })
         }
     }
+    /* eslint-disable no-undef */
+    if (typeof globalThis !== 'undefined') {
+        globalThis['sprintf'] = sprintf
+        globalThis['vsprintf'] = vsprintf
+    }
+    /* eslinst-enable no-undef */
     /* eslint-enable quote-props */
 }(); // eslint-disable-line
