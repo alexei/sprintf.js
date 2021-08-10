@@ -6,7 +6,7 @@
     "dist/sprintf.min.js",
     "dist/angular-sprintf.min.js"
   ],
-  "license": "BSD-3-Clause-Clear",
+  "license": "BSD-3-Clause",
   "keywords": ["sprintf", "string", "formatting"],
   "authors": ["Alexandru Marasteanu <hello@alexei.ro> (http://alexei.ro/)"],
   "homepage": "https://github.com/alexei/sprintf.js",
