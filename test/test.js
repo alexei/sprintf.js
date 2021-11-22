@@ -41,6 +41,7 @@ describe('sprintfjs', function() {
         assert.equal('f', sprintf('%.1t', false))
         assert.equal('false', sprintf('%t', ''))
         assert.equal('false', sprintf('%t', 0))
+        assert.equal('NaN', sprintf('%f', NaN))
 
         assert.equal('undefined', sprintf('%T', undefined))
         assert.equal('null', sprintf('%T', null))
