@@ -1,4 +1,4 @@
-/* global window, exports, define */
+/* global window, define */
 
 !function() {
     'use strict'
