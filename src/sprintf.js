@@ -140,14 +140,14 @@
         return output
     }
 
-    var sprintf_cache = Object.create(null)
+    let sprintf_cache = Object.create(null)
 
     function sprintf_parse(fmt) {
         if (sprintf_cache[fmt]) {
             return sprintf_cache[fmt]
         }
-
-        var _fmt = fmt, match, parse_tree = [], arg_names = 0
+        const parse_tree = []
+        let _fmt = fmt, match, arg_names = 0
         while (_fmt) {
             if ((match = re.text.exec(_fmt)) !== null) {
                 parse_tree.push(match[0])
@@ -158,7 +158,8 @@
             else if ((match = re.placeholder.exec(_fmt)) !== null) {
                 if (match[2]) {
                     arg_names |= 1
-                    var field_list = [], replacement_field = match[2], field_match = []
+                    const field_list = []
+                    let  replacement_field = match[2], field_match = []
                     if ((field_match = re.key.exec(replacement_field)) !== null) {
                         field_list.push(field_match[1])
                         while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
