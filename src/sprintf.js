@@ -3,7 +3,7 @@
 !function() {
     'use strict'
 
-    var re = {
+    const re = {
         not_string: /[^s]/,
         not_bool: /[^t]/,
         not_type: /[^T]/,
@@ -31,7 +31,8 @@
     }
 
     function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
+        const tree_length = parse_tree.length
+        let cursor = 1, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
         for (i = 0; i < tree_length; i++) {
             if (typeof parse_tree[i] === 'string') {
                 output += parse_tree[i]
