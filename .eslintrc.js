@@ -2,10 +2,12 @@ module.exports = {
     extends: 'eslint:recommended',
     env: {
         node: true,
+        es2020: true,
         es6: true
     },
     rules: {
         indent: ['error', 4, {SwitchCase: 1}],
+        'no-redeclare': 0,
         'quote-props': ['error', 'as-needed'],
         'no-cond-assign': 0,
         'no-console': 0,

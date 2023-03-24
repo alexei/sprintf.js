@@ -39,7 +39,7 @@ describe('sprintfjs', function() {
         should_throw('%(12)s', [], SyntaxError)
     })
 
-    var numeric = 'bcdiefguxX'.split('')
+    var numeric = 'b,c,d,i,e,f,g,u,x,X,lx,lX'.split(',')
     numeric.forEach(function(specifier) {
         var fmt = sprintf('%%%s',specifier)
         it(fmt + ' should throw TypeError for invalid numbers', function() {
@@ -50,11 +50,15 @@ describe('sprintfjs', function() {
         })
 
         it(fmt + ' should not throw TypeError for something implicitly castable to number', function() {
-            should_not_throw(fmt, [1/0])
             should_not_throw(fmt, [true])
             should_not_throw(fmt, [[1]])
             should_not_throw(fmt, ['200'])
-            should_not_throw(fmt, [null])
+            if ((fmt !== "%lx") && (fmt !== "%lX")) {
+                // Cannot convert Infinity to BigInt
+                should_not_throw(fmt, [1/0])
+                // Cannot convert null to a BigInt
+                should_not_throw(fmt, [null])
+            }
         })
     })
 

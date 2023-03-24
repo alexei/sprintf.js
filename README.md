@@ -75,7 +75,9 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `T` — yields the type of the argument<sup><a href="#fn-1" name="fn-ref-1">1</a></sup>
     * `v` — yields the primitive value of the specified argument
     * `x` — yields an integer as a hexadecimal number (lower-case)
+    * `lx` — yields an large unsigned integer ( > 32-bit ) as a hexadecimal number (lower-case)
     * `X` — yields an integer as a hexadecimal number (upper-case)
+    * `lX` — yields an large unsigned integer ( > 32-bit ) as a hexadecimal number (upper-case)
     * `j` — yields a JavaScript object or array as a JSON encoded string
 
 ## Features

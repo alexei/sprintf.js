@@ -18,7 +18,7 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "eslint": "^5.10.0",
+    "eslint": "^8.36.0",
     "gulp": "^3.9.1",
     "gulp-benchmark": "^1.1.1",
     "gulp-eslint": "^5.0.0",
