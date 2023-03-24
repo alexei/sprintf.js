@@ -14,7 +14,7 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([lx]{2,}|[lX]{2,}|[b-gijostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -116,6 +116,12 @@
                         break
                     case 'X':
                         arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
+                        break
+                    case 'lx':
+                        arg = BigInt(arg).toString(16)
+                        break
+                    case 'lX':
+                        arg = BigInt(arg).toString(16).toUpperCase()
                         break
                 }
                 if (re.json.test(ph.type)) {
