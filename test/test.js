@@ -31,6 +31,8 @@ describe('sprintfjs', function() {
         assert.equal('ffffff01', sprintf('%x', -255))
         assert.equal('FF', sprintf('%X', 255))
         assert.equal('FFFFFF01', sprintf('%X', -255))
+        assert.equal('230824900a', sprintf('%lx', 150460469258))
+        assert.equal('230824900A', sprintf('%lX', 150460469258))
         assert.equal('Polly wants a cracker', sprintf('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants'))
         assert.equal('Hello world!', sprintf('Hello %(who)s!', {who: 'world'}))
         assert.equal('true', sprintf('%t', true))
