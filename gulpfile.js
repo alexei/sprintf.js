@@ -17,21 +17,23 @@ gulp.task('benchmark', function () {
         .pipe(benchmark())
 })
 
-gulp.task('lint', function() {
-    return gulp
+gulp.task('lint', function(done) {
+    gulp
         .src('src/*.js')
         .pipe(eslint())
         .pipe(eslint.format())
+    done()
 })
 
-gulp.task('test', ['lint'], function() {
-    return gulp
+gulp.task('test', gulp.series('lint', function(done) {
+    gulp
         .src('test/*.js', {read: false})
         .pipe(mocha({reporter: 'nyan'}))
-})
+    done()
+}))
 
-gulp.task('dist', ['test'], function() {
-    return gulp.src([
+gulp.task('dist', gulp.series('test', function(done) {
+    gulp.src([
         'src/*.js'
     ])
         .pipe(sourcemaps.init())
@@ -40,6 +42,7 @@ gulp.task('dist', ['test'], function() {
         .pipe(header(banner, {pkg: pkg}))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist'))
-})
+    done()
+}))
 
-gulp.task('default', ['dist'])
+gulp.task('default', gulp.series('dist'))
