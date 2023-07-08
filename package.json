@@ -19,7 +19,7 @@
   "devDependencies": {
     "benchmark": "^2.1.4",
     "eslint": "^5.10.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-benchmark": "^1.1.1",
     "gulp-eslint": "^5.0.0",
     "gulp-header": "^2.0.5",
