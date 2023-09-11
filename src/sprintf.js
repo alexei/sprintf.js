@@ -8,13 +8,14 @@
         not_bool: /[^t]/,
         not_type: /[^T]/,
         not_primitive: /[^v]/,
+        nothing: /[n]/,
         number: /[diefg]/,
         numeric_arg: /[bcdiefguxX]/,
         json: /[j]/,
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijnostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -89,6 +90,9 @@
                     case 'g':
                         arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
                         break
+                    case 'n':
+                        arg = ''
+                        break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
                         break
@@ -118,7 +122,10 @@
                         arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
                         break
                 }
-                if (re.json.test(ph.type)) {
+                if (re.nothing.test(ph.type)) {
+                    output += arg
+                }
+                else if (re.json.test(ph.type)) {
                     output += arg
                 }
                 else {

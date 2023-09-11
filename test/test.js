@@ -58,6 +58,10 @@ describe('sprintfjs', function() {
         assert.equal('1,2,3', sprintf('%v', [1, 2, 3]))
         assert.equal('[object Object]', sprintf('%v', {foo: 'bar'}))
         assert.equal('/<("[^"]*"|\'[^\']*\'|[^\'">])*>/', sprintf('%v', /<("[^"]*"|'[^']*'|[^'">])*>/))
+
+        assert.equal('', sprintf('%n', 42))
+        assert.equal('', sprintf('%2$n', 'foo', 'bar', 'baz'))
+        assert.equal('Hello !', sprintf('Hello %(name)n!', {name: 'world'}))
     })
 
     it('should return formated strings for complex placeholders', function() {
@@ -104,6 +108,9 @@ describe('sprintfjs', function() {
         assert.equal('xxxxx', sprintf('%5.5s', 'xxxxxx'))
         assert.equal('    x', sprintf('%5.1s', 'xxxxxx'))
 
+        // mixed nothing
+        assert.equal('', sprintf("%+'#10n", -123))
+        assert.equal('foobaz', sprintf('%s%n%s', 'foo', 'bar', 'baz'))
     })
 
     it('should return formated strings for callbacks', function() {
