@@ -69,6 +69,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `u` — yields an integer as an unsigned decimal number
     * `f` — yields a float as is; see notes on precision above
     * `g` — yields a float as is; see notes on precision above
+    * `n` — yields nothing
     * `o` — yields an integer as an octal number
     * `s` — yields a string as is
     * `t` — yields `true` or `false`
