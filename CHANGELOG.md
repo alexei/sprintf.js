@@ -1,4 +1,8 @@
-## 1.1.2 (NOT YET RELEASED)
+## 1.1.3
+
+* fix LICENSE name
+
+## 1.1.2
 
 * Update Travis config to test on all LTE Node versions (i.e. 6+)
 * Reorganize README; add instructions re polyfills
