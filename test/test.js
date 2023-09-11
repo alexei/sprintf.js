@@ -110,6 +110,7 @@ describe('sprintfjs', function() {
 
         // mixed nothing
         assert.equal('', sprintf("%+'#10n", -123))
+        assert.equal('foobaz', sprintf('%s%n%s', 'foo', 'bar', 'baz'))
     })
 
     it('should return formated strings for callbacks', function() {
