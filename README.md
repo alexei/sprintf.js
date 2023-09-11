@@ -136,7 +136,7 @@ YMMV
 
 ## License
 
-**sprintf-js** is licensed under the terms of the 3-clause BSD license.
+**sprintf-js** is licensed under the terms of the BSD 3-Clause License.
 
 ## Notes
 
