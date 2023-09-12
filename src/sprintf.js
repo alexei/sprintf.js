@@ -22,16 +22,19 @@
     }
 
     function sprintf(key) {
-        // `arguments` is not an array, but should be fine for this call
-        return sprintf_format(sprintf_parse(key), arguments)
+        var leakGuard = new Array(arguments.length-1)
+        for (var i=0; i<leakGuard.length; ++i) {
+            leakGuard[i] = arguments[i+1]
+        }
+        return vsprintf(key, leakGuard)
     }
 
     function vsprintf(fmt, argv) {
-        return sprintf.apply(null, [fmt].concat(argv || []))
+        return sprintf_format(sprintf_parse(fmt), argv || [])
     }
 
     function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
+        var cursor = 0, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
         for (i = 0; i < tree_length; i++) {
             if (typeof parse_tree[i] === 'string') {
                 output += parse_tree[i]
@@ -48,7 +51,7 @@
                     }
                 }
                 else if (ph.param_no) { // positional argument (explicit)
-                    arg = argv[ph.param_no]
+                    arg = argv[ph.param_no-1]
                 }
                 else { // positional argument (implicit)
                     arg = argv[cursor++]
