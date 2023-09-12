@@ -7,7 +7,7 @@ var assert = require('assert'),
     sprintf = sprintfjs.sprintf
 
 describe('sprintfjs', function() {
-    var pi = 3.141592653589793
+    var pi = Math.PI
 
     it('should return formated strings for simple placeholders', function() {
         assert.equal('%', sprintf('%%'))
