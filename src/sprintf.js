@@ -210,10 +210,7 @@
     // original function reference, adapted to use sprintf
     // https://ghost-together.medium.com/tagged-template-literals-1e1f175c21e4
     function SPF(strings, ...values) {
-        // stolen from sprintf
-        const re = /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/
         let result = ``;
-        
         
         strings.map((string, index) => {
             var match
@@ -221,7 +218,7 @@
             let value = (index <= values.length - 1) ? values[index] : ``;
             
             // look ahead for a format for the current value
-            match = re.exec(strings[index+1])
+            match = re.placeholder.exec(strings[index+1])
             
             if ( match ) {
                 value = sprintf(match[0], value)
@@ -229,7 +226,7 @@
             
             // clean up format on current string
             // (was used to format previous value)
-            match = re.exec(string)
+            match = re.placeholder.exec(string)
             
             if ( match ) {
                 string = string.slice(match[0].length)
