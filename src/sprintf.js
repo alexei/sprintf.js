@@ -206,6 +206,40 @@
         return sprintf_cache[fmt] = parse_tree
     }
 
+    // tagged template string version
+    // original function reference, adapted to use sprintf
+    // https://ghost-together.medium.com/tagged-template-literals-1e1f175c21e4
+    function SPF(strings, ...values) {
+        // stolen from sprintf
+        const re = /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/
+        let result = ``;
+        
+        
+        strings.map((string, index) => {
+            var match
+            
+            let value = (index <= values.length - 1) ? values[index] : ``;
+            
+            // look ahead for a format for the current value
+            match = re.exec(strings[index+1])
+            
+            if ( match ) {
+                value = sprintf(match[0], value)
+            }
+            
+            // clean up format on current string
+            // (was used to format previous value)
+            match = re.exec(string)
+            
+            if ( match ) {
+                string = string.slice(match[0].length)
+            }
+            
+            result += string + value;
+        });
+        return result;
+    }
+    
     /**
      * export to either browser or node.js
      */
@@ -213,19 +247,22 @@
     if (typeof exports !== 'undefined') {
         exports['sprintf'] = sprintf
         exports['vsprintf'] = vsprintf
+        exports['SPF'] = SPF
     }
     if (typeof window !== 'undefined') {
         window['sprintf'] = sprintf
         window['vsprintf'] = vsprintf
-
+        window['SPF'] = SPF
         if (typeof define === 'function' && define['amd']) {
             define(function() {
                 return {
                     'sprintf': sprintf,
-                    'vsprintf': vsprintf
+                    'vsprintf': vsprintf,
+                    'SPF': SPF
                 }
             })
         }
     }
+    
     /* eslint-enable quote-props */
 }(); // eslint-disable-line
