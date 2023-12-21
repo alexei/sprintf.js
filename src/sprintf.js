@@ -63,7 +63,7 @@
                 }
 
                 if (re.number.test(ph.type)) {
-                    is_positive = arg >= 0
+                    is_positive = arg >= 0 || isNaN(arg)
                 }
 
                 switch (ph.type) {
