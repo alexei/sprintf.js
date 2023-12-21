@@ -2,7 +2,7 @@
 
 !function() {
     'use strict'
-
+    
     var re = {
         not_string: /[^s]/,
         not_bool: /[^t]/,
@@ -20,16 +20,16 @@
         index_access: /^\[(\d+)\]/,
         sign: /^[+-]/
     }
-
+    
     function sprintf(key) {
         // `arguments` is not an array, but should be fine for this call
         return sprintf_format(sprintf_parse(key), arguments)
     }
-
+    
     function vsprintf(fmt, argv) {
         return sprintf.apply(null, [fmt].concat(argv || []))
     }
-
+    
     function sprintf_format(parse_tree, argv) {
         var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
         for (i = 0; i < tree_length; i++) {
@@ -53,19 +53,19 @@
                 else { // positional argument (implicit)
                     arg = argv[cursor++]
                 }
-
+                
                 if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
                     arg = arg()
                 }
-
+                
                 if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
                     throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg))
                 }
-
+                
                 if (re.number.test(ph.type)) {
                     is_positive = arg >= 0
                 }
-
+                
                 switch (ph.type) {
                     case 'b':
                         arg = parseInt(arg, 10).toString(2)
@@ -138,14 +138,14 @@
         }
         return output
     }
-
+    
     var sprintf_cache = Object.create(null)
-
+    
     function sprintf_parse(fmt) {
         if (sprintf_cache[fmt]) {
             return sprintf_cache[fmt]
         }
-
+        
         var _fmt = fmt, match, parse_tree = [], arg_names = 0
         while (_fmt) {
             if ((match = re.text.exec(_fmt)) !== null) {
@@ -183,7 +183,7 @@
                 if (arg_names === 3) {
                     throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
                 }
-
+                
                 parse_tree.push(
                     {
                         placeholder: match[0],
@@ -205,17 +205,17 @@
         }
         return sprintf_cache[fmt] = parse_tree
     }
-
+    
     // tagged template string version
     // original function reference, adapted to use sprintf
     // https://ghost-together.medium.com/tagged-template-literals-1e1f175c21e4
     function SPF(strings, ...values) {
-        let result = ``;
+        var result = ``
         
         strings.map((string, index) => {
             var match
             
-            let value = (index <= values.length - 1) ? values[index] : ``;
+            var value = (index <= values.length - 1) ? values[index] : ``
             
             // look ahead for a format for the current value
             match = re.placeholder.exec(strings[index+1])
@@ -232,14 +232,14 @@
                 string = string.slice(match[0].length)
             }
             
-            result += string + value;
-        });
-        return result;
+            result += string + value
+        })
+        return result
     }
     
     /**
-     * export to either browser or node.js
-     */
+    * export to either browser or node.js
+    */
     /* eslint-disable quote-props */
     if (typeof exports !== 'undefined') {
         exports['sprintf'] = sprintf

@@ -4,8 +4,9 @@
 
 var assert = require('assert'),
     sprintfjs = require('../src/sprintf.js'),
-    sprintf = sprintfjs.sprintf
-
+    sprintf = sprintfjs.sprintf,
+    SPF = sprintfjs.SPF
+    
 describe('sprintfjs', function() {
     var pi = 3.141592653589793
 
@@ -103,10 +104,14 @@ describe('sprintfjs', function() {
         assert.equal('2.3', sprintf('%.1f', 2.345))
         assert.equal('xxxxx', sprintf('%5.5s', 'xxxxxx'))
         assert.equal('    x', sprintf('%5.1s', 'xxxxxx'))
-
     })
-
+    
     it('should return formated strings for callbacks', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
+    })
+
+    it('should return formatted strings for tagged template literals', function() {
+        assert.equal('2.3', SPF`${2.345}%.1f`)
+        assert.equal('______-123', SPF`${-123}%+'_10d`)
     })
 })
