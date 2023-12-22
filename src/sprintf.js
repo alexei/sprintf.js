@@ -63,7 +63,7 @@
                 }
                 
                 if (re.number.test(ph.type)) {
-                    is_positive = arg >= 0
+                    is_positive = arg >= 0 || isNaN(arg)
                 }
                 
                 switch (ph.type) {
@@ -221,7 +221,7 @@
             match = re.placeholder.exec(strings[index+1])
             
             if ( match ) {
-                value = sprintf(match[0], value)
+                value = sprintf(match[0], value ? value : NaN)
             }
             
             // clean up format on current string
