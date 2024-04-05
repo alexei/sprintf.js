@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  CI: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm install eslint@^8
+      - run: npm run lint
+
+  coverage:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - run: npm install
+      - name: run coverage
+        run: |
+          npm install --no-save c8
+          npx c8 --reporter=lcov npm test
+        env:
+          NODE_ENV: cov
+
+      - name: codecov
+        uses: codecov/codecov-action@v4
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+
+  ubuntu:
+    needs: [get-lts]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ${{ fromJson(needs.get-lts.outputs.active) }}
+        include:
+          - node: 10
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        name: Node ${{ matrix.node }} on ubuntu-latest
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run test
+
+  windows:
+    needs: [lint, get-lts]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        node: ${{ fromJson(needs.get-lts.outputs.active) }}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        name: Node.js ${{ matrix.node }} on windows-latest
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run test
+
+  get-lts:
+    runs-on: ubuntu-latest
+    steps:
+      - id: get
+        uses: msimerson/node-lts-versions@v1
+    outputs:
+      active: ${{ steps.get.outputs.active }}
+      lts: ${{ steps.get.outputs.lts }}
+      min: ${{ steps.get.outputs.min }}

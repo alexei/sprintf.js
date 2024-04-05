@@ -210,6 +210,7 @@
      * export to either browser or node.js
      */
     /* eslint-disable quote-props */
+    /* eslint no-redeclare: [ "warn" ] */
     if (typeof exports !== 'undefined') {
         exports['sprintf'] = sprintf
         exports['vsprintf'] = vsprintf

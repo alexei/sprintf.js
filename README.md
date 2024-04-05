@@ -1,18 +1,12 @@
 # sprintf-js
 
-[![Build Status][travisci-image]][travisci-url] [![NPM Version][npm-image]][npm-url] [![Dependency Status][dependencies-image]][dependencies-url] [![devDependency Status][dev-dependencies-image]][dev-dependencies-url]
+[![Build Status][ci-image]][ci-url] [![NPM Version][npm-image]][npm-url]
 
-[travisci-image]: https://travis-ci.org/alexei/sprintf.js.svg?branch=master
-[travisci-url]: https://travis-ci.org/alexei/sprintf.js
+[ci-image]: https://github.com/alexei/sprintf.js/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/alexei/sprintf.js/actions/workflows/ci.yml
 
 [npm-image]: https://badge.fury.io/js/sprintf-js.svg
 [npm-url]: https://badge.fury.io/js/sprintf-js
-
-[dependencies-image]: https://david-dm.org/alexei/sprintf.js.svg
-[dependencies-url]: https://david-dm.org/alexei/sprintf.js
-
-[dev-dependencies-image]: https://david-dm.org/alexei/sprintf.js/dev-status.svg
-[dev-dependencies-url]: https://david-dm.org/alexei/sprintf.js#info=devDependencies
 
 **sprintf-js** is a complete open source JavaScript `sprintf` implementation for the **browser** and **Node.js**.
 
