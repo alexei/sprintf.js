@@ -10,15 +10,22 @@
         not_primitive: /[^v]/,
         number: /[diefg]/,
         numeric_arg: /[bcdiefguxX]/,
+        thousands_arg: /[diufg]/,
         json: /[j]/,
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(')?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
         sign: /^[+-]/
+    }
+
+    function add_thousands_separator(num_str) {
+        var parts = num_str.split('.')
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        return parts.join('.')
     }
 
     function sprintf(key) {
@@ -129,6 +136,9 @@
                     else {
                         sign = ''
                     }
+                    if (ph.thousands && re.thousands_arg.test(ph.type)) {
+                        arg = add_thousands_separator(arg.toString())
+                    }
                     pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' '
                     pad_length = ph.width - (sign + arg).length
                     pad = ph.width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
@@ -190,11 +200,12 @@
                         param_no:    match[1],
                         keys:        match[2],
                         sign:        match[3],
-                        pad_char:    match[4],
-                        align:       match[5],
-                        width:       match[6],
-                        precision:   match[7],
-                        type:        match[8]
+                        thousands:   match[4],
+                        pad_char:    match[5],
+                        align:       match[6],
+                        width:       match[7],
+                        precision:   match[8],
+                        type:        match[9]
                     }
                 )
             }

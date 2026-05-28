@@ -109,4 +109,37 @@ describe('sprintfjs', function() {
     it('should return formated strings for callbacks', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
     })
+
+    it('should insert thousands separators with the apostrophe flag', function() {
+        // basic integer cases
+        assert.equal('1,234,567', sprintf("%'d", 1234567))
+        assert.equal('-1,234,567', sprintf("%'d", -1234567))
+        assert.equal('+1,234,567', sprintf("%+'d", 1234567))
+        assert.equal('-1,234,567', sprintf("%+'d", -1234567))
+        assert.equal('0', sprintf("%'d", 0))
+        assert.equal('123', sprintf("%'d", 123))
+        assert.equal('1,234', sprintf("%'d", 1234))
+
+        // other numeric types
+        assert.equal('1,234,567', sprintf("%'i", 1234567))
+        assert.equal('1,234,567', sprintf("%'u", 1234567))
+        assert.equal('1,234,567', sprintf("%'g", 1234567))
+
+        // floats keep separators in the integer part only
+        assert.equal('1,234,567.89', sprintf("%'.2f", 1234567.891))
+        assert.equal('1,234.5', sprintf("%'.1f", 1234.5))
+        assert.equal('-1,234.50', sprintf("%'.2f", -1234.5))
+
+        // combined with width / padding
+        assert.equal('   1,234', sprintf("%'8d", 1234))
+        assert.equal('1,234   ', sprintf("%'-8d", 1234))
+
+        // unaffected types: hex/octal/binary do not get separators
+        assert.equal('1e240', sprintf("%'x", 123456))
+        assert.equal('361100', sprintf("%'o", 123456))
+
+        // backward compat: pad-with-character syntax still works
+        assert.equal('______-123', sprintf("%+'_10d", -123))
+        assert.equal('____<', sprintf("%'_5s", '<'))
+    })
 })
