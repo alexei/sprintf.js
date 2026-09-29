@@ -81,13 +81,13 @@
                         arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
                         break
                     case 'e':
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
+                        arg = ph.precision !== undefined ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
                         break
                     case 'f':
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
+                        arg = ph.precision !== undefined ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
                         break
                     case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
+                        arg = ph.precision !== undefined ? String(Number(parseFloat(arg).toPrecision(ph.precision || 1))) : parseFloat(arg)
                         break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
@@ -184,6 +184,11 @@
                     throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
                 }
 
+                var precision = match[7] === undefined ? undefined : parseInt(match[7], 10)
+                if (precision !== undefined && (precision < 0 || precision > 100)) {
+                    throw new RangeError('[sprintf] precision must be between 0 and 100')
+                }
+
                 parse_tree.push(
                     {
                         placeholder: match[0],
@@ -193,7 +198,7 @@
                         pad_char:    match[4],
                         align:       match[5],
                         width:       match[6],
-                        precision:   match[7],
+                        precision:   precision,
                         type:        match[8]
                     }
                 )

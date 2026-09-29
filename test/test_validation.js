@@ -81,4 +81,24 @@ describe('sprintfjs', function() {
         should_not_throw("%(x)s", c)
         should_not_throw("%(y)s", c)
     })
+
+    it('should throw RangeError for out-of-range precision (> 100)', function() {
+        should_throw('%.101f', [1], RangeError)
+        should_throw('%.101e', [1], RangeError)
+        should_throw('%.101g', [1], RangeError)
+        should_throw('%.200f', [1], RangeError)
+    })
+
+    it('should not throw for in-range precision boundaries', function() {
+        should_not_throw('%.0f', [1])
+        should_not_throw('%.100f', [1])
+        should_not_throw('%.0e', [1])
+        should_not_throw('%.100e', [1])
+        should_not_throw('%.1g', [1])
+        should_not_throw('%.100g', [1])
+    })
+
+    it('should not throw for %.0g (precision 0 mapped to toPrecision(1))', function() {
+        should_not_throw('%.0g', [1])
+    })
 })
