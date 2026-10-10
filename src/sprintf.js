@@ -109,7 +109,7 @@
                         break
                     case 'v':
                         arg = arg.valueOf()
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        arg = (ph.precision ? String(arg).substring(0, ph.precision) : arg)
                         break
                     case 'x':
                         arg = (parseInt(arg, 10) >>> 0).toString(16)
