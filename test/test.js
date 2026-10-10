@@ -110,3 +110,23 @@ describe('sprintfjs', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
     })
 })
+
+describe('primitive value precision', function() {
+    it('should truncate numeric and boolean primitive values', function() {
+        assert.equal('12', sprintf('%.2v', 12345))
+        assert.equal('tr', sprintf('%.2v', true))
+        assert.equal('fal', sprintf('%.3v', false))
+        assert.equal('', sprintf('%.0v', 42))
+    })
+
+    it('should truncate values returned by valueOf', function() {
+        assert.equal('12', sprintf('%.2v', new Number(12345)))
+        assert.equal('12', sprintf('%.2v', {valueOf: function() { return 12345 }}))
+        assert.equal('1,2', sprintf('%.3v', [1, 2, 3]))
+    })
+
+    it('should apply field width after truncating a primitive value', function() {
+        assert.equal(' 12', sprintf('%3.2v', 12345))
+        assert.equal('12 ', sprintf('%-3.2v', 12345))
+    })
+})
