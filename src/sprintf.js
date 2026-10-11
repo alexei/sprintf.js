@@ -81,13 +81,13 @@
                         arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
                         break
                     case 'e':
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
+                        arg = ph.precision ? parseFloat(arg).toExponential(Math.max(0, Math.min(100, Number(ph.precision)))) : parseFloat(arg).toExponential()
                         break
                     case 'f':
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
+                        arg = ph.precision ? parseFloat(arg).toFixed(Math.max(0, Math.min(100, Number(ph.precision)))) : parseFloat(arg)
                         break
                     case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
+                        arg = ph.precision ? String(Number(arg.toPrecision(Math.max(1, Math.min(100, Number(ph.precision)))))) : parseFloat(arg)
                         break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
