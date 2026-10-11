@@ -1,3 +1,7 @@
+## Unreleased
+
+* Cap numeric precision at the JavaScript-supported limit to avoid uncaught range errors.
+
 ## 1.1.3
 
 * fix LICENSE name

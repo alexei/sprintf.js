@@ -43,3 +43,9 @@ gulp.task('dist', ['test'], function() {
 })
 
 gulp.task('default', ['dist'])
+
+gulp.task('test-dist', ['dist'], function() {
+    return gulp
+        .src('test/dist/*.js', {read: false})
+        .pipe(mocha({reporter: 'nyan'}))
+})

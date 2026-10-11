@@ -81,4 +81,23 @@ describe('sprintfjs', function() {
         should_not_throw("%(x)s", c)
         should_not_throw("%(y)s", c)
     })
+
+    it('should cap numeric precision at the JavaScript limit without throwing', function() {
+        var specifiers = ['e', 'f', 'g']
+        specifiers.forEach(function(specifier) {
+            var capped = sprintf('%.100' + specifier, 1.25)
+            assert.equal(sprintf('%.101' + specifier, 1.25), capped)
+            assert.equal(sprintf('%.' + new Array(102).join('9') + specifier, 1.25), capped)
+        })
+        assert.equal(sprintf('%.0g', 1.25), sprintf('%.1g', 1.25))
+    })
+
+    it('should preserve zero precision for non-numeric specifiers', function() {
+        assert.equal(sprintf('%.0e', 1.25), '1e+0')
+        assert.equal(sprintf('%.0f', 1.25), '1')
+        assert.equal(sprintf('%.0s', 'text'), '')
+        assert.equal(sprintf('%.0t', true), '')
+        assert.equal(sprintf('%.0T', true), '')
+    })
+
 })

@@ -60,6 +60,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
 * An optional `-` sign, that causes `sprintf` to left-align the result of this placeholder. The default is to right-align the result.
 * An optional number, that says how many characters the result should have. If the value to be returned is shorter than this number, the result will be padded. When used with the `j` (JSON) type specifier, the padding length specifies the tab size used for indentation.
 * An optional precision modifier, consisting of a `.` (dot) followed by a number, that says how many digits should be displayed for floating point numbers. When used with the `g` type specifier, it specifies the number of significant digits. When used on a string, it causes the result to be truncated.
+  For the numeric `e`, `f`, and `g` specifiers, precision is capped at 100 to match JavaScript's number-formatting limit. A precision of `0` with `g` is treated as one significant digit.
 * A type specifier that can be any of:
     * `%` — yields a literal `%` character
     * `b` — yields an integer as a binary number

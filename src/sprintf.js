@@ -81,13 +81,13 @@
                         arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
                         break
                     case 'e':
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
+                        arg = ph.precision !== undefined ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
                         break
                     case 'f':
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
+                        arg = ph.precision !== undefined ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
                         break
                     case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
+                        arg = ph.precision !== undefined ? String(Number(parseFloat(arg).toPrecision(ph.precision))) : parseFloat(arg)
                         break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
@@ -140,6 +140,7 @@
     }
 
     var sprintf_cache = Object.create(null)
+    var max_precision = 100
 
     function sprintf_parse(fmt) {
         if (sprintf_cache[fmt]) {
@@ -184,6 +185,14 @@
                     throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
                 }
 
+                var precision = match[7]
+                if (precision !== undefined && /[efg]/.test(match[8])) {
+                    precision = Math.min(parseInt(precision, 10), max_precision)
+                    if (match[8] === 'g' && precision === 0) {
+                        precision = 1
+                    }
+                }
+
                 parse_tree.push(
                     {
                         placeholder: match[0],
@@ -193,7 +202,7 @@
                         pad_char:    match[4],
                         align:       match[5],
                         width:       match[6],
-                        precision:   match[7],
+                        precision:   precision,
                         type:        match[8]
                     }
                 )
