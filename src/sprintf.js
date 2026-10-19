@@ -139,7 +139,9 @@
         return output
     }
 
-    var sprintf_cache = Object.create(null)
+    var sprintf_cache = Object.create(null),
+        sprintf_cache_keys = [],
+        sprintf_cache_max = 1000
 
     function sprintf_parse(fmt) {
         if (sprintf_cache[fmt]) {
@@ -203,6 +205,11 @@
             }
             _fmt = _fmt.substring(match[0].length)
         }
+        if (sprintf_cache_keys.length >= sprintf_cache_max) {
+            // Evict the oldest format. Dynamic or hostile formats must not grow memory without limit.
+            delete sprintf_cache[sprintf_cache_keys.shift()]
+        }
+        sprintf_cache_keys.push(fmt)
         return sprintf_cache[fmt] = parse_tree
     }
 

@@ -24,6 +24,16 @@ describe('sprintfjs cache', function() {
         should_not_throw('%s', ['caching...'])
         should_not_throw('%s', ['crash?'])
     })
+
+    it('should keep working after the cache evicts old formats', function() {
+        var i
+        // Use more unique formats than the cache holds. Old entries must be evicted safely.
+        for (i = 0; i < 1200; i++) {
+            assert.equal('format ' + i + ' x', sprintf('format ' + i + ' %s', 'x'))
+        }
+        // Re-parse an evicted format and check the output.
+        assert.equal('format 0 x', sprintf('format 0 %s', 'x'))
+    })
 })
 
 describe('sprintfjs', function() {
