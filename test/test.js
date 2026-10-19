@@ -60,6 +60,17 @@ describe('sprintfjs', function() {
         assert.equal('/<("[^"]*"|\'[^\']*\'|[^\'">])*>/', sprintf('%v', /<("[^"]*"|'[^']*'|[^'">])*>/))
     })
 
+    it('should stringify %v values and handle nullish values', function() {
+        assert.equal('null', sprintf('%v', null))
+        assert.equal('undefined', sprintf('%v', undefined))
+        assert.equal('42', sprintf('%.2v', 42))
+        assert.equal('tr', sprintf('%.2v', true))
+        assert.equal('1,', sprintf('%.2v', [1, 2, 3]))
+        assert.equal('Sy', sprintf('%.2v', Symbol('x')))
+        assert.equal('[object Object]', sprintf('%v', Object.create(null)))
+        assert.equal('[object Object]', sprintf('%v', {valueOf: undefined}))
+    })
+
     it('should return formated strings for complex placeholders', function() {
         // sign
         assert.equal('2', sprintf('%d', 2))

@@ -108,8 +108,16 @@
                         arg = parseInt(arg, 10) >>> 0
                         break
                     case 'v':
-                        arg = arg.valueOf()
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        if (arg == null) {
+                            arg = String(arg)
+                        }
+                        else if (typeof arg.valueOf === 'function') {
+                            arg = String(arg.valueOf())
+                        }
+                        else {
+                            arg = Object.prototype.toString.call(arg)
+                        }
+                        arg = (ph.precision !== undefined ? arg.substring(0, ph.precision) : arg)
                         break
                     case 'x':
                         arg = (parseInt(arg, 10) >>> 0).toString(16)
