@@ -21,6 +21,36 @@
         sign: /^[+-]/
     }
 
+    // Older engines accept only 20/21 digits. Discover their bound once rather
+    // than passing untrusted precision through to a native RangeError.
+    var precision_limits = {
+        e: precision_limit('toExponential'),
+        f: precision_limit('toFixed'),
+        g: precision_limit('toPrecision')
+    }
+
+    function precision_limit(method) {
+        var lower = 0, upper = 100, middle
+        while (lower < upper) {
+            middle = Math.ceil((lower + upper) / 2)
+            try {
+                (1)[method](middle)
+                lower = middle
+            }
+            catch (error) {
+                if (!(error instanceof RangeError)) {
+                    throw error
+                }
+                upper = middle - 1
+            }
+        }
+        return lower
+    }
+
+    function bounded_precision(precision, type) {
+        return Math.max(type === 'g' ? 1 : 0, Math.min(precision_limits[type], precision))
+    }
+
     function sprintf(key) {
         // `arguments` is not an array, but should be fine for this call
         return sprintf_format(sprintf_parse(key), arguments)
@@ -81,13 +111,13 @@
                         arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
                         break
                     case 'e':
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
+                        arg = ph.precision ? parseFloat(arg).toExponential(bounded_precision(ph.precision, 'e')) : parseFloat(arg).toExponential()
                         break
                     case 'f':
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
+                        arg = ph.precision ? parseFloat(arg).toFixed(bounded_precision(ph.precision, 'f')) : parseFloat(arg)
                         break
                     case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
+                        arg = ph.precision ? String(Number(arg.toPrecision(bounded_precision(ph.precision, 'g')))) : parseFloat(arg)
                         break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)

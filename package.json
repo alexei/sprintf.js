@@ -8,7 +8,9 @@
     "test": "mocha test/*.js",
     "pretest": "npm run lint",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "test:dist": "mocha test-dist/*.js",
+    "test:security": "npm test && npm run test:dist"
   },
   "repository": {
     "type": "git",
