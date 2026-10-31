@@ -9,6 +9,7 @@
         not_type: /[^T]/,
         not_primitive: /[^v]/,
         number: /[diefg]/,
+        integer: /[bcdiouxX]/,
         numeric_arg: /[bcdiefguxX]/,
         json: /[j]/,
         not_json: /[^j]/,
@@ -64,6 +65,10 @@
 
                 if (re.number.test(ph.type)) {
                     is_positive = arg >= 0
+                }
+
+                if (re.integer.test(ph.type) && typeof arg === 'number' && Math.abs(arg) < 1) {
+                    arg = 0
                 }
 
                 switch (ph.type) {

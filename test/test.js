@@ -60,6 +60,24 @@ describe('sprintfjs', function() {
         assert.equal('/<("[^"]*"|\'[^\']*\'|[^\'">])*>/', sprintf('%v', /<("[^"]*"|'[^']*'|[^'">])*>/))
     })
 
+    var integer_types = ['b', 'c', 'd', 'i', 'o', 'u', 'x', 'X']
+    integer_types.forEach(function(type) {
+        it('should truncate tiny numeric arguments for %' + type, function() {
+            var values = [9.9999e-7, -9.9999e-7, Number.MIN_VALUE, -Number.MIN_VALUE, 1e-6, -1e-6, 0.9, -0.9]
+            values.forEach(function(value) {
+                var expected = type === 'c' ? '\x00' : ((type === 'd' || type === 'i') && value < 0 ? '-0' : '0')
+                assert.equal(expected, sprintf('%' + type, value))
+            })
+        })
+    })
+
+    it('should preserve sign and padding for tiny numeric arguments', function() {
+        assert.equal(sprintf('%+05d', 0), sprintf('%+05d', 9.9999e-7))
+        assert.equal(sprintf('%+05d', -0.1), sprintf('%+05d', -9.9999e-7))
+        assert.equal(sprintf('%05i', 0), sprintf('%05i', 9.9999e-7))
+        assert.equal(sprintf('%05i', -0.1), sprintf('%05i', -9.9999e-7))
+    })
+
     it('should return formated strings for complex placeholders', function() {
         // sign
         assert.equal('2', sprintf('%d', 2))
