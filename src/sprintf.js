@@ -30,6 +30,11 @@
         return sprintf.apply(null, [fmt].concat(argv || []))
     }
 
+    function toUnsigned(value) {
+        var number = parseInt(value, 10)
+        return number < 0 ? number >>> 0 : number
+    }
+
     function sprintf_format(parse_tree, argv) {
         var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
         for (i = 0; i < tree_length; i++) {
@@ -90,7 +95,7 @@
                         arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
                         break
                     case 'o':
-                        arg = (parseInt(arg, 10) >>> 0).toString(8)
+                        arg = toUnsigned(arg).toString(8)
                         break
                     case 's':
                         arg = String(arg)
@@ -105,17 +110,17 @@
                         arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
                         break
                     case 'u':
-                        arg = parseInt(arg, 10) >>> 0
+                        arg = toUnsigned(arg)
                         break
                     case 'v':
                         arg = arg.valueOf()
                         arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
                         break
                     case 'x':
-                        arg = (parseInt(arg, 10) >>> 0).toString(16)
+                        arg = toUnsigned(arg).toString(16)
                         break
                     case 'X':
-                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
+                        arg = toUnsigned(arg).toString(16).toUpperCase()
                         break
                 }
                 if (re.json.test(ph.type)) {
