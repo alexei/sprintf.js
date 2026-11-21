@@ -80,6 +80,22 @@ The placeholders in the format string are marked by `%` and are followed by one 
 
 ## Features
 
+### Dynamic width and precision
+
+Use `*` in place of a width or precision to read it from the next argument:
+
+    sprintf('%*s', 5, 'x')           // '    x'
+    sprintf('%.*f', 2, Math.PI)      // '3.14'
+    sprintf('%*.*f', 8, 2, Math.PI)  // '    3.14'
+
+Width and precision arguments must be finite integer numbers. They are consumed
+before the value, in width-then-precision order. A negative width applies the
+`-` alignment flag with its absolute value. A negative precision behaves as if
+the precision were omitted; zero precision is preserved.
+
+Dynamic width and precision also work with `vsprintf`. They cannot be mixed
+with named placeholders. The indexed `*m$` syntax is not supported.
+
 ### Argument swapping
 
 You can also swap the arguments. That is, the order of the placeholders doesn't have to match the order of the arguments. You can do that by simply indicating in the format string which arguments the placeholders refer to:

@@ -106,6 +106,87 @@ describe('sprintfjs', function() {
 
     })
 
+    it('should take dynamic width from the next argument', function() {
+        assert.equal('    x', sprintf('%*s', 5, 'x'))
+        assert.equal('   42', sprintf('%*d', 5, 42))
+        assert.equal('-0042', sprintf('%0*d', 5, -42))
+        assert.equal('____x', sprintf("%'_*s", 5, 'x'))
+        assert.equal('x', sprintf('%*s', 0, 'x'))
+        assert.equal('longer', sprintf('%*s', 2, 'longer'))
+        assert.equal('{\n  "x": 1\n}', sprintf('%*j', 2, {x: 1}))
+    })
+
+    it('should take dynamic precision from the next argument', function() {
+        assert.equal('3.14', sprintf('%.*f', 2, pi))
+        assert.equal('3.14e+0', sprintf('%.*e', 2, pi))
+        assert.equal('3.14', sprintf('%.*g', 3, pi))
+        assert.equal('abc', sprintf('%.*s', 3, 'abcdef'))
+        assert.equal('  3.14', sprintf('%6.*f', 2, pi))
+        assert.equal('  3.14', sprintf('%*.2f', 6, pi))
+    })
+
+    it('should consume width and precision before the value', function() {
+        assert.equal('a:    3.14:42', sprintf('%s:%*.*f:%d', 'a', 8, 2, pi, 42))
+        assert.equal('   ab / 3.1', sprintf('%*.*s / %.*f', 5, 2, 'abcd', 1, pi))
+        assert.equal('  3.14', sprintf('%3$*.*f', 6, 2, pi))
+        assert.equal('    x', sprintf('%2$*s', 5, 'x'))
+    })
+
+    it('should retain zero dynamic precision', function() {
+        assert.equal('3', sprintf('%.*f', 0, pi))
+        assert.equal('3e+0', sprintf('%.*e', 0, pi))
+        assert.equal('', sprintf('%.*s', 0, 'abc'))
+        assert.equal('   ', sprintf('%*.*s', 3, 0, 'abc'))
+        assert.equal('', sprintf('%.*t', 0, true))
+        assert.equal('', sprintf('%.*T', 0, true))
+        assert.equal('', sprintf('%.*v', 0, 'abc'))
+    })
+
+    it('should treat a negative dynamic width as left alignment', function() {
+        assert.equal('x    ', sprintf('%*s', -5, 'x'))
+        assert.equal('x    ', sprintf('%-*s', 5, 'x'))
+        assert.equal('x0000', sprintf('%0*s', -5, 'x'))
+        assert.equal('3.14  ', sprintf('%*.*f', -6, 2, pi))
+    })
+
+    it('should treat a negative dynamic precision as omitted', function() {
+        assert.equal(sprintf('%f', pi), sprintf('%.*f', -1, pi))
+        assert.equal(sprintf('%e', pi), sprintf('%.*e', -1, pi))
+        assert.equal(sprintf('%g', pi), sprintf('%.*g', -1, pi))
+        assert.equal('abcdef', sprintf('%.*s', -1, 'abcdef'))
+    })
+
+    it('should not cache dynamic values or alignment', function() {
+        assert.equal('3.14    ', sprintf('%*.*f', -8, 2, pi))
+        assert.equal('   3', sprintf('%*.*f', 4, 0, pi))
+        assert.equal('3.141592653589793', sprintf('%*.*f', 0, -1, pi))
+        assert.equal('  3.142', sprintf('%*.*f', 7, 3, pi))
+    })
+
+    it('should support dynamic arguments in vsprintf and computed values', function() {
+        var args = [6, 2, pi], calls = 0
+        assert.equal('  3.14', sprintfjs.vsprintf('%*.*f', args))
+        assert.deepEqual(args, [6, 2, pi])
+        assert.equal('  3.14', sprintf('%*.*f', 6, 2, function() {
+            calls++
+            return pi
+        }))
+        assert.equal(calls, 1)
+    })
+
+    it('should reject noninteger dynamic width and precision', function() {
+        var invalid = [undefined, null, true, '2', 1.5, NaN, Infinity, -Infinity]
+        invalid.forEach(function(value) {
+            assert.throws(function() { sprintf('%*s', value, 'abc') }, /expecting integer width/)
+            assert.throws(function() { sprintf('%.*s', value, 'abc') }, /expecting integer precision/)
+        })
+    })
+
+    it('should reject dynamic positional arguments with named placeholders', function() {
+        assert.throws(function() { sprintf('%(name)*s', {name: 'x'}, 5) }, /mixing positional and named/)
+        assert.throws(function() { sprintf('%(name).*s', {name: 'x'}, 2) }, /mixing positional and named/)
+    })
+
     it('should return formated strings for callbacks', function() {
         assert.equal('foobar', sprintf('%s', function() { return 'foobar' }))
     })

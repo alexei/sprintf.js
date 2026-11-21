@@ -14,7 +14,7 @@
         not_json: /[^j]/,
         text: /^[^\x25]+/,
         modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+|\*)?(?:\.(\d+|\*))?([b-gijostTuvxX])/,
         key: /^([a-z_][a-z_\d]*)/i,
         key_access: /^\.([a-z_][a-z_\d]*)/i,
         index_access: /^\[(\d+)\]/,
@@ -31,13 +31,35 @@
     }
 
     function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
+        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign, width, precision, align
         for (i = 0; i < tree_length; i++) {
             if (typeof parse_tree[i] === 'string') {
                 output += parse_tree[i]
             }
             else if (typeof parse_tree[i] === 'object') {
                 ph = parse_tree[i] // convenience purposes only
+                width = ph.width
+                precision = ph.precision
+                align = ph.align
+                // Resolve arguments without changing the cached placeholder.
+                if (width === '*') {
+                    width = argv[cursor++]
+                    if (typeof width !== 'number' || !isFinite(width) || Math.floor(width) !== width) {
+                        throw new TypeError('[sprintf] expecting integer width')
+                    }
+                    if (width < 0) {
+                        width = -width
+                        align = true
+                    }
+                }
+                if (precision === '*') {
+                    precision = argv[cursor++]
+                    if (typeof precision !== 'number' || !isFinite(precision) || Math.floor(precision) !== precision) {
+                        throw new TypeError('[sprintf] expecting integer precision')
+                    }
+                    // Parsed precisions are strings, including the truthy "0".
+                    precision = precision < 0 ? undefined : String(precision)
+                }
                 if (ph.keys) { // keyword argument
                     arg = argv[cursor]
                     for (k = 0; k < ph.keys.length; k++) {
@@ -78,38 +100,38 @@
                         arg = parseInt(arg, 10)
                         break
                     case 'j':
-                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
+                        arg = JSON.stringify(arg, null, width ? parseInt(width) : 0)
                         break
                     case 'e':
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
+                        arg = precision ? parseFloat(arg).toExponential(precision) : parseFloat(arg).toExponential()
                         break
                     case 'f':
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
+                        arg = precision ? parseFloat(arg).toFixed(precision) : parseFloat(arg)
                         break
                     case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
+                        arg = precision ? String(Number(arg.toPrecision(precision))) : parseFloat(arg)
                         break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
                         break
                     case 's':
                         arg = String(arg)
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        arg = (precision ? arg.substring(0, precision) : arg)
                         break
                     case 't':
                         arg = String(!!arg)
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        arg = (precision ? arg.substring(0, precision) : arg)
                         break
                     case 'T':
                         arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase()
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        arg = (precision ? arg.substring(0, precision) : arg)
                         break
                     case 'u':
                         arg = parseInt(arg, 10) >>> 0
                         break
                     case 'v':
                         arg = arg.valueOf()
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
+                        arg = (precision ? arg.substring(0, precision) : arg)
                         break
                     case 'x':
                         arg = (parseInt(arg, 10) >>> 0).toString(16)
@@ -130,9 +152,9 @@
                         sign = ''
                     }
                     pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' '
-                    pad_length = ph.width - (sign + arg).length
-                    pad = ph.width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
-                    output += ph.align ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
+                    pad_length = width - (sign + arg).length
+                    pad = width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
+                    output += align ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
                 }
             }
         }
@@ -155,6 +177,9 @@
                 parse_tree.push('%')
             }
             else if ((match = re.placeholder.exec(_fmt)) !== null) {
+                if (match[6] === '*' || match[7] === '*') {
+                    arg_names |= 2
+                }
                 if (match[2]) {
                     arg_names |= 1
                     var field_list = [], replacement_field = match[2], field_match = []
