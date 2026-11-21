@@ -30,6 +30,16 @@
         return sprintf.apply(null, [fmt].concat(argv || []))
     }
 
+    function sprintf_general(arg, precision) {
+        var result = arg.toPrecision(precision), magnitude = Math.abs(Number(result))
+        // toPrecision already chooses scientific notation at exponent >= precision.
+        // General format also uses it below exponent -4, after rounding.
+        if (magnitude !== 0 && magnitude < 0.0001) {
+            result = arg.toExponential(precision - 1)
+        }
+        return result.replace(/(\.\d*?)0+(?=e|$)/, '$1').replace(/\.(?=e|$)/, '')
+    }
+
     function sprintf_format(parse_tree, argv) {
         var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
         for (i = 0; i < tree_length; i++) {
@@ -87,7 +97,7 @@
                         arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
                         break
                     case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
+                        arg = ph.precision ? sprintf_general(arg, ph.precision) : parseFloat(arg)
                         break
                     case 'o':
                         arg = (parseInt(arg, 10) >>> 0).toString(8)
