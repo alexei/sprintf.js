@@ -97,6 +97,10 @@ Format strings may contain replacement fields rather than positional placeholder
     }
     sprintf('Hello %(name)s', user) // Hello Dolly
 
+Keywords begin with a letter (`a-z`, case-insensitive) or underscore and may contain letters, digits, underscores and spaces. Spaces are part of the property name and are not trimmed:
+
+    sprintf('Hello %(First Name)s', {'First Name': 'Dolly'}) // Hello Dolly
+
 Keywords in replacement fields can be optionally followed by any number of keywords or indexes:
 
     var users = [
