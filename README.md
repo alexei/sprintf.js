@@ -68,7 +68,7 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `e` — yields a float using scientific notation
     * `u` — yields an integer as an unsigned decimal number
     * `f` — yields a float as is; see notes on precision above
-    * `g` — yields a float as is; see notes on precision above
+    * `g` — yields a float as is when precision is omitted. With precision, uses that many significant digits and scientific notation if the rounded exponent is less than -4 or at least the precision; otherwise uses decimal notation. Trailing fractional zeros are removed.
     * `o` — yields an integer as an octal number
     * `s` — yields a string as is
     * `t` — yields `true` or `false`
