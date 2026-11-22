@@ -78,6 +78,18 @@ The placeholders in the format string are marked by `%` and are followed by one 
     * `X` — yields an integer as a hexadecimal number (upper-case)
     * `j` — yields a JavaScript object or array as a JSON encoded string
 
+`d` and `i` also accept native `BigInt` values without converting them to
+`Number`, so signed decimal integers retain all their digits. Sign, width,
+padding and alignment options work as usual:
+
+```javascript
+sprintf('%d', BigInt('9007199254740993')) // '9007199254740993'
+sprintf('%+06i', BigInt(42)) // '+00042'
+```
+
+This requires an environment with native `BigInt` support. Other numeric
+specifiers retain their existing `Number` behavior.
+
 ## Features
 
 ### Argument swapping
