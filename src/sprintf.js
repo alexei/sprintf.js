@@ -58,7 +58,9 @@
                     arg = arg()
                 }
 
-                if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
+                // ESLint 5 predates the valid 'bigint' typeof result.
+                if (re.numeric_arg.test(ph.type) && typeof arg !== 'number' &&
+                    !(typeof arg === 'bigint' && (ph.type === 'd' || ph.type === 'i')) && isNaN(arg)) { // eslint-disable-line valid-typeof
                     throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg))
                 }
 
@@ -75,7 +77,7 @@
                         break
                     case 'd':
                     case 'i':
-                        arg = parseInt(arg, 10)
+                        arg = typeof arg === 'bigint' ? arg.toString() : parseInt(arg, 10) // eslint-disable-line valid-typeof
                         break
                     case 'j':
                         arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
