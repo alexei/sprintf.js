@@ -39,7 +39,7 @@ describe('sprintfjs', function() {
         should_throw('%(12)s', [], SyntaxError)
     })
 
-    var numeric = 'bcdiefguxX'.split('')
+    var numeric = 'bcdiefgouxX'.split('')
     numeric.forEach(function(specifier) {
         var fmt = sprintf('%%%s',specifier)
         it(fmt + ' should throw TypeError for invalid numbers', function() {
